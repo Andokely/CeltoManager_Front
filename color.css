@@ -1,0 +1,45 @@
+:root {
+    --bg-color: #fbfcff;
+    --white: #FFFFFF;
+    --primary-1: #d1d1d1;
+    --primary-2: #191970;
+    --primary-3: #FFFFFF;
+    --primary-4: #6CB4EE;
+    --border-color: #d1d1d1;
+    --hover-bg-color: #ffcccc;
+    --icon-fill-color: #494949;
+    --text-color: black;
+  }
+  
+  .dark-mode {
+    --bg-color: #334155;
+    --white: #0c0b0b;
+    --primary-1: #0A1F32;
+    --primary-2: #383d46;
+    --primary-3: #1F2B3E;
+    --primary-4: #2072AF;
+    --border-color: #0A1F32;
+    --hover-bg-color: #3d3d3d;
+    --icon-fill-color: #ffffff;
+    --text-color: #ffffff;
+  }
+  
+  .toast {
+    min-height: 40px;
+    padding: 5px 5px;
+    font-size: 14px;
+    opacity: 1;
+  }
+  
+  .custom-dialog-paper {
+    background-color: #020202;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: #1E293B
+  }
+  
+  .dialog-button-validate {
+    background: rebeccapurple;
+  }
+  
+  

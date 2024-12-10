@@ -1,0 +1,82 @@
+.scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #4B5563 #1F2B3E;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px; 
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #1F2937; 
+    border-radius: 10px; 
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #4B5563; 
+    border-radius: 10px;
+    border: 2px solid #1F2937;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+  }
+  
+  .animate-fadeIn {
+    animation: fadeIn 0.2s ease forwards; /* Durée de 0.5s pour l'animation */
+  }
+  
+  @keyframes slideInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px); /* Déplacement vers le bas de 20px */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Position finale */
+    }
+  }
+  
+  .animate-slideInUp {
+    animation: slideInUp 0.5s ease forwards; /* Durée de 0.5s pour l'animation */
+  }
+  
+  @keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(50px); /* Déplacement vers la gauche de 20px */
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0); /* Position finale */
+    }
+  }
+  
+  .animate-slideInRight {
+    animation: slideInRight 0.5s ease forwards; /* Durée de 0.5s pour l'animation */
+  }
+  
+  @keyframes slideInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px); /* Déplacement vers la droite de 20px */
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0); /* Position finale */
+    }
+  }
+  
+  .animate-slideInLeft {
+    animation: slideInLeft 0.5s ease forwards; /* Durée de 0.5s pour l'animation */
+  }
+  
+  
+  
