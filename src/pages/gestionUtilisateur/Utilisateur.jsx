@@ -82,7 +82,8 @@ function Utilisateur() {
     const handleCloseDialog = () => {
         setDialogOpen(false);
         setDialogType(null);
-        setSelectedRole(null)
+        setSelectedRole(null);
+        setSelectedUserId(null)
     }
 
     const handleAdd = (e) => {
@@ -112,6 +113,7 @@ function Utilisateur() {
     };
 
     const handleSelectedRole = (role) => {
+        console.log(role)
         setSelectedRole(role)
         setFormDatas({
             ...formDatas,
@@ -158,14 +160,62 @@ function Utilisateur() {
             handleCloseDialog()
             await fetchUsers()
         } catch (error) {
-            errorNotify({ message: "Vous n'êtes pas autorisé à effectuer cette suppression " })
+            errorNotify({ message: error.response.data.message })
             handleCloseDialog()
         }
 
     }
 
-    const handleEditConfirm = () => {
+    const handleEdit = async (userId) => {
+        handleOpenDialog('editUser')
+    }
 
+    const getUserById = async (userId) => {
+        setDialogType('editUser')
+        await openModal();
+        setSelectedUserId(userId)
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${config.API_HOST}/users/${userId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+
+        })
+
+        setFormDatas({
+            pseudo: response.data.user.pseudo,
+            nom: response.data.user.nom,
+            email: response.data.user.email,
+            role: response.data.user.role,
+        })
+        setSelectedRole({
+            value: response.data.user.role,
+            label: response.data.user.role
+        })
+    }
+
+    const handleEditConfirm = async () => {
+        try {
+            const token = localStorage.getItem('token');
+
+            const dataObject = formDatas;
+            const response = await axios.patch(`${config.API_HOST}/users/${selectedUserId}`, JSON.stringify(dataObject), {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+
+            })
+            handleCloseDialog();
+            closeModal()
+            addNotify({ message: response.data.message });
+        } catch (error) {
+            errorNotify({ message: error.response.data.message })
+            handleCloseDialog()
+            closeModal()
+        }
+        await fetchUsers();
     }
 
 
@@ -190,7 +240,7 @@ function Utilisateur() {
                     <MdEdit
                         className="text-blue-500 cursor-pointer"
                         size={20}
-                    // onClick={() => handleViewDetails(emp)}
+                        onClick={() => getUserById(user.id)}
                     />
                     <MdDelete
                         className="text-red-500 cursor-pointer"
@@ -201,8 +251,6 @@ function Utilisateur() {
             </>
         ),
     }));
-
-
 
     return (
         <>
@@ -290,14 +338,18 @@ function Utilisateur() {
                             labelLabel="Mot de passe"
                         /> */}
                         {/* <_UploadImage /> */}
-                        <_TextInput
-                            type="text"
-                            name="motDePasse"
-                            placeholder="Confirmer mot de passe ..."
-                            value={formDatas.motDePasse}
-                            onChange={handleChange}
-                            labelLabel="Mot de passe"
-                        />
+                        {
+                            dialogType === 'editUser' ? ('') : (
+                                <_TextInput
+                                    type="text"
+                                    name="motDePasse"
+                                    placeholder="Confirmer mot de passe ..."
+                                    value={formDatas.motDePasse}
+                                    onChange={handleChange}
+                                    labelLabel="Mot de passe"
+                                />
+                            )
+                        }
                     </div>
                     <div className="mt-4 flex justify-end">
                         <_BtnText
