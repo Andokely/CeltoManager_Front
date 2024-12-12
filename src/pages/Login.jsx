@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
 import { errorNotify } from '../components/Notification/ToastUtil';
 import _Carousel from '../components/_carousel';
@@ -17,6 +17,10 @@ function Login() {
         motDePasse: '',
     }
     const [formDatas, setFormDatas] = useState(initialFormState);
+
+    useEffect(() => {
+        document.title = "Celto manager | Login";
+    }, []);
 
 
     const navigate = useNavigate();

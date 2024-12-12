@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import _SideBarProd from '../components/SideBar/_SideBarProd';
 import _NavBar from '../components/_NavBar';
 import Login from '../pages/Login';
 
 function M_GProd() {
+
+    useEffect(() => {
+        document.title = "Celto manager | Production";
+    }, []);
+
     return (
         <div className="dashboard-app flex">
             <div className="w-[calc(22rem+20px)]">

@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import _SideBarPers from '../components/SideBar/_SideBarPers';
 import _NavBar from '../components/_NavBar';
 import Personnel from '../pages/gestionPersonnel/personnel/Personnel';
 
 function M_GPers() {
+
+    useEffect(() => {
+        document.title = "Celto manager | Personnel";
+    }, []);
+
     return (
         <div className="App flex" style={{ backgroundColor: 'var(--primary-1)' }}>
             <div className='w-[calc(22rem+20px)] z-30 '>

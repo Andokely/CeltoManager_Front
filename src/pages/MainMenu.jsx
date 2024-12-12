@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import _MainMenu from "../components/_MainMenu";
 import _NavbarMain from '../components/_NavBarMain';
 
 function MainMenu() {
+
+    useEffect(() => {
+        document.title = "Celto manager | Menu principale";
+    }, []);
+
     return (
         <>
             <div

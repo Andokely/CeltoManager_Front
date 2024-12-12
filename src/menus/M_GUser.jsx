@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import _NavBar from '../components/_NavBar';
 import _SideBarUser from '../components/SideBar/_SideBarUser';
 import Utilisateur from '../pages/gestionUtilisateur/Utilisateur';
 
 function M_GUser() {
+
+    useEffect(() => {
+        document.title = "Celto manager | Utilisateur";
+    }, []);
+
     return (
         <div className="App flex" style={{ backgroundColor: 'var(--primary-1)' }}>
             <div className='w-[calc(22rem+20px)] z-30 '>
@@ -16,7 +21,7 @@ function M_GUser() {
                 </div>
                 <div className='mt-[0vh]'>
                     <Routes>
-                        <Route path="utilisateur" element={<Utilisateur/>} />
+                        <Route path="utilisateur" element={<Utilisateur />} />
                     </Routes>
                 </div>
             </div>
