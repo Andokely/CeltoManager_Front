@@ -17,37 +17,37 @@ import _UploadImage from "../../components/_UploadImage";
 import { data } from "react-router-dom";
 Modal.setAppElement('#root');
 
-function Role() {
+function Poste() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [role, setRole] = useState([]);
+    const [Poste, setPoste] = useState([]);
     const [dialogType, setDialogType] = useState(null);
-    const [selectedRole, setSelectedRole] = useState(null);
-    const [selectedRoleId, setSelectedRoleId] = useState(null);
+    const [selectedPoste, setSelectedPoste] = useState(null);
+    const [selectedPosteId, setSelectedPosteId] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
     const initialFormState = {
-        labelRole: '',
+        labelPoste: '',
     }
     const [formDatas, setFormDatas] = useState(initialFormState);
 
-    const deleteRoleMessage = "Voulez-vous vraiment supprimer ce rôle ?"
-    const deleteRoleMessageType = "Confirmation de Suppression"
+    const deletePosteMessage = "Voulez-vous vraiment supprimer ce poste ?"
+    const deletePosteMessageType = "Confirmation de Suppression"
 
-    const addRoleMessage = "Voulez-vous vraiment ajouter ce rôle ?"
-    const addRoleMessageType = "Confirmation d'ajout"
+    const addPosteMessage = "Voulez-vous vraiment ajouter ce poste ?"
+    const addPosteMessageType = "Confirmation d'ajout"
 
-    const editRoleMessage = "Voulez-vous vraiment modifier ce rôle ?"
-    const editRoleMessageType = "Confirmation de modification"
+    const editPosteMessage = "Voulez-vous vraiment modifier ce poste ?"
+    const editPosteMessageType = "Confirmation de modification"
 
     useEffect(() => {
-        fetchRole()
+        fetchPoste()
     }, [])
 
-    const fetchRole = async () => {
+    const fetchPoste = async () => {
         try {
             const token = localStorage.getItem('token');
 
-            const response = await axios.get(`${config.API_HOST}/roles`, {
+            const response = await axios.get(`${config.API_HOST}/Postes`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ function Role() {
 
             })
 
-            setRole(response.data);
+            setPoste(response.data);
 
         } catch (error) {
             console.error('Error fetching categories:', error);
@@ -69,7 +69,7 @@ function Role() {
         setModalIsOpen(false);
         setFormDatas(initialFormState);
         setDialogType(null);
-        setSelectedRole(null)
+        setSelectedPoste(null)
     }
     const handleOpenDialog = (type) => {
         setDialogType(type);
@@ -78,12 +78,12 @@ function Role() {
     const handleCloseDialog = () => {
         setDialogOpen(false);
         setDialogType(null);
-        setSelectedRole(null);
-        setSelectedRoleId(null)
+        setSelectedPoste(null);
+        setSelectedPosteId(null)
     }
 
     const handleAdd = (e) => {
-        handleOpenDialog('addRole')
+        handleOpenDialog('addPoste')
     }
 
     const handleChange = (e) => {
@@ -97,7 +97,7 @@ function Role() {
     const handleAddConfirm = async () => {
         try {
             const dataObject = formDatas;
-            const response = await axios.post(`${config.API_HOST}/roles`, JSON.stringify(dataObject), {
+            const response = await axios.post(`${config.API_HOST}/Postes`, JSON.stringify(dataObject), {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -106,22 +106,22 @@ function Role() {
             handleCloseDialog();
             closeModal()
             addNotify({ message: response.data.message });
-            await fetchRole()
+            await fetchPoste()
         } catch (error) {
             errorNotify({ message: error.response.data.message });
             handleCloseDialog();
         }
     }
 
-    const handleDelete = async (roleId) => {
-        handleOpenDialog('deleteRole')
-        setSelectedRoleId(roleId)
+    const handleDelete = async (PosteId) => {
+        handleOpenDialog('deletePoste')
+        setSelectedPosteId(PosteId)
     }
 
     const handleDeleteConfirm = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.delete(`${config.API_HOST}/roles/${selectedRoleId}`, {
+            const response = await axios.delete(`${config.API_HOST}/Postes/${selectedPosteId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ function Role() {
 
             addNotify({ message: response.data.message })
             handleCloseDialog()
-            await fetchRole()
+            await fetchPoste()
         } catch (error) {
             errorNotify({ message: error.response.data.message })
             handleCloseDialog()
@@ -139,16 +139,16 @@ function Role() {
 
     }
 
-    const handleEdit = async (roleId) => {
-        handleOpenDialog('editRole')
+    const handleEdit = async (PosteId) => {
+        handleOpenDialog('editPoste')
     }
 
-    const getRoleById = async (roleId) => {
-        setDialogType('editRole')
+    const getPosteById = async (PosteId) => {
+        setDialogType('editPoste')
         await openModal();
-        setSelectedRoleId(roleId)
+        setSelectedPosteId(PosteId)
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${config.API_HOST}/roles/${roleId}`, {
+        const response = await axios.get(`${config.API_HOST}/Postes/${PosteId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ function Role() {
         })
 
         setFormDatas({
-            labelRole: response.data.labelRole,
+            labelPoste: response.data.labelPoste,
         })
     }
 
@@ -166,7 +166,7 @@ function Role() {
             const token = localStorage.getItem('token');
 
             const dataObject = formDatas;
-            const response = await axios.patch(`${config.API_HOST}/roles/${selectedRoleId}`, JSON.stringify(dataObject), {
+            const response = await axios.patch(`${config.API_HOST}/Postes/${selectedPosteId}`, JSON.stringify(dataObject), {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -181,32 +181,32 @@ function Role() {
             handleCloseDialog()
             closeModal()
         }
-        await fetchRole();
+        await fetchPoste();
     }
 
 
     const columns = [
         { Header: "Numero", accessor: "numero" },
-        { Header: "Role", accessor: "role" },
+        { Header: "Poste", accessor: "Poste" },
         { Header: "Action", accessor: "action", className: "text-center" },
 
     ];
 
-    const dataTable = role.map((role, index) => ({
-        numero: (<_Cellule valeur={(index + 1).toString()} />),
-        role: (<_Cellule valeur={role.labelRole} />),
+    const dataTable = Poste.map((Poste, index) => ({
+        numero: (<_Cellule valeur={index + 1} />),
+        Poste: (<_Cellule valeur={Poste.labelPoste} />),
         action: (
             <>
                 <div className="flex justify-center space-x-5">
                     <MdEdit
                         className="text-blue-500 cursor-pointer"
                         size={20}
-                        onClick={() => getRoleById(role.id)}
+                        onClick={() => getPosteById(Poste.id)}
                     />
                     <MdDelete
                         className="text-red-500 cursor-pointer"
                         size={20}
-                        onClick={() => handleDelete(role.id)}
+                        onClick={() => handleDelete(Poste.id)}
                     />
                 </div>
             </>
@@ -219,7 +219,7 @@ function Role() {
                 className={`transition-all duration-700 ease-in-out px-5 transform`}>
                 <_Table
                     entriesPerPage={{ defaultValue: 50, entries: [10, 25, 50, 100] }}
-                    title={"Liste des roles"}
+                    title={"Liste des Postes"}
                     canSearch={true}
                     table={{ columns, rows: dataTable }}
                     pagination={true}
@@ -243,7 +243,7 @@ function Role() {
             >
                 <div className="modal-content rounded-lg shadow-lg px-5 py-2 max-w-lg w-full md:w-2/3 lg:w-2/3 relative" style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }}>
                     <div className="flex justify-between">
-                        <h2 className="text-xl mt-2 font-semibold">{dialogType === 'editRole' ? 'Modifier un rôle' : 'Ajouter un rôle'}</h2>
+                        <h2 className="text-xl mt-2 font-semibold">{dialogType === 'editPoste' ? 'Modifier un poste' : 'Ajouter un poste'}</h2>
                         <button onClick={closeModal} className="close-button text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
                     </div>
                     <hr className='py-2' />
@@ -251,17 +251,17 @@ function Role() {
                     <div className=''>
                         <_TextInput
                             type="text"
-                            name="labelRole"
-                            placeholder="Rôle ..."
-                            value={formDatas.labelRole}
+                            name="labelPoste"
+                            placeholder="poste ..."
+                            value={formDatas.labelPoste}
                             onChange={handleChange}
-                            labelLabel="Label rôle"
+                            labelLabel="Label poste"
                         />
                     </div>
                     <div className="mt-4 flex justify-end">
                         <_BtnText
                             text="Enregistrer"
-                            onClick={dialogType === 'editRole' ? handleEdit : handleAdd}
+                            onClick={dialogType === 'editPoste' ? handleEdit : handleAdd}
                             variant="primary"
                             icon={FaCheck}
                             iconPosition="left"
@@ -273,25 +273,25 @@ function Role() {
                 open={dialogOpen}
                 onClose={handleCloseDialog}
                 onConfirm={
-                    dialogType === 'deleteRole'
+                    dialogType === 'deletePoste'
                         ? handleDeleteConfirm
-                        : dialogType === 'editRole'
+                        : dialogType === 'editPoste'
                             ? handleEditConfirm
                             : handleAddConfirm
                 }
                 title={
-                    dialogType === 'deleteRole'
-                        ? deleteRoleMessageType
-                        : dialogType === 'editRole'
-                            ? editRoleMessageType
-                            : addRoleMessageType
+                    dialogType === 'deletePoste'
+                        ? deletePosteMessageType
+                        : dialogType === 'editPoste'
+                            ? editPosteMessageType
+                            : addPosteMessageType
                 }
                 message={
-                    dialogType === 'deleteRole'
-                        ? deleteRoleMessage
-                        : dialogType === 'editRole'
-                            ? editRoleMessage
-                            : addRoleMessage
+                    dialogType === 'deletePoste'
+                        ? deletePosteMessage
+                        : dialogType === 'editPoste'
+                            ? editPosteMessage
+                            : addPosteMessage
                 }
             />
         </>
@@ -299,4 +299,4 @@ function Role() {
 
 }
 
-export default Role
+export default Poste

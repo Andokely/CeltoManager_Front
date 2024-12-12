@@ -17,37 +17,37 @@ import _UploadImage from "../../components/_UploadImage";
 import { data } from "react-router-dom";
 Modal.setAppElement('#root');
 
-function Role() {
+function Secteur() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [role, setRole] = useState([]);
+    const [Secteur, setSecteur] = useState([]);
     const [dialogType, setDialogType] = useState(null);
-    const [selectedRole, setSelectedRole] = useState(null);
-    const [selectedRoleId, setSelectedRoleId] = useState(null);
+    const [selectedSecteur, setSelectedSecteur] = useState(null);
+    const [selectedSecteurId, setSelectedSecteurId] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
     const initialFormState = {
-        labelRole: '',
+        labelSecteur: '',
     }
     const [formDatas, setFormDatas] = useState(initialFormState);
 
-    const deleteRoleMessage = "Voulez-vous vraiment supprimer ce rôle ?"
-    const deleteRoleMessageType = "Confirmation de Suppression"
+    const deleteSecteurMessage = "Voulez-vous vraiment supprimer ce Secteur ?"
+    const deleteSecteurMessageType = "Confirmation de Suppression"
 
-    const addRoleMessage = "Voulez-vous vraiment ajouter ce rôle ?"
-    const addRoleMessageType = "Confirmation d'ajout"
+    const addSecteurMessage = "Voulez-vous vraiment ajouter ce Secteur ?"
+    const addSecteurMessageType = "Confirmation d'ajout"
 
-    const editRoleMessage = "Voulez-vous vraiment modifier ce rôle ?"
-    const editRoleMessageType = "Confirmation de modification"
+    const editSecteurMessage = "Voulez-vous vraiment modifier ce Secteur ?"
+    const editSecteurMessageType = "Confirmation de modification"
 
     useEffect(() => {
-        fetchRole()
+        fetchSecteur()
     }, [])
 
-    const fetchRole = async () => {
+    const fetchSecteur = async () => {
         try {
             const token = localStorage.getItem('token');
 
-            const response = await axios.get(`${config.API_HOST}/roles`, {
+            const response = await axios.get(`${config.API_HOST}/Secteurs`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ function Role() {
 
             })
 
-            setRole(response.data);
+            setSecteur(response.data);
 
         } catch (error) {
             console.error('Error fetching categories:', error);
@@ -69,7 +69,7 @@ function Role() {
         setModalIsOpen(false);
         setFormDatas(initialFormState);
         setDialogType(null);
-        setSelectedRole(null)
+        setSelectedSecteur(null)
     }
     const handleOpenDialog = (type) => {
         setDialogType(type);
@@ -78,12 +78,12 @@ function Role() {
     const handleCloseDialog = () => {
         setDialogOpen(false);
         setDialogType(null);
-        setSelectedRole(null);
-        setSelectedRoleId(null)
+        setSelectedSecteur(null);
+        setSelectedSecteurId(null)
     }
 
     const handleAdd = (e) => {
-        handleOpenDialog('addRole')
+        handleOpenDialog('addSecteur')
     }
 
     const handleChange = (e) => {
@@ -97,7 +97,7 @@ function Role() {
     const handleAddConfirm = async () => {
         try {
             const dataObject = formDatas;
-            const response = await axios.post(`${config.API_HOST}/roles`, JSON.stringify(dataObject), {
+            const response = await axios.post(`${config.API_HOST}/Secteurs`, JSON.stringify(dataObject), {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -106,22 +106,22 @@ function Role() {
             handleCloseDialog();
             closeModal()
             addNotify({ message: response.data.message });
-            await fetchRole()
+            await fetchSecteur()
         } catch (error) {
             errorNotify({ message: error.response.data.message });
             handleCloseDialog();
         }
     }
 
-    const handleDelete = async (roleId) => {
-        handleOpenDialog('deleteRole')
-        setSelectedRoleId(roleId)
+    const handleDelete = async (SecteurId) => {
+        handleOpenDialog('deleteSecteur')
+        setSelectedSecteurId(SecteurId)
     }
 
     const handleDeleteConfirm = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.delete(`${config.API_HOST}/roles/${selectedRoleId}`, {
+            const response = await axios.delete(`${config.API_HOST}/Secteurs/${selectedSecteurId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ function Role() {
 
             addNotify({ message: response.data.message })
             handleCloseDialog()
-            await fetchRole()
+            await fetchSecteur()
         } catch (error) {
             errorNotify({ message: error.response.data.message })
             handleCloseDialog()
@@ -139,16 +139,16 @@ function Role() {
 
     }
 
-    const handleEdit = async (roleId) => {
-        handleOpenDialog('editRole')
+    const handleEdit = async (SecteurId) => {
+        handleOpenDialog('editSecteur')
     }
 
-    const getRoleById = async (roleId) => {
-        setDialogType('editRole')
+    const getSecteurById = async (SecteurId) => {
+        setDialogType('editSecteur')
         await openModal();
-        setSelectedRoleId(roleId)
+        setSelectedSecteurId(SecteurId)
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${config.API_HOST}/roles/${roleId}`, {
+        const response = await axios.get(`${config.API_HOST}/Secteurs/${SecteurId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ function Role() {
         })
 
         setFormDatas({
-            labelRole: response.data.labelRole,
+            labelSecteur: response.data.labelSecteur,
         })
     }
 
@@ -166,7 +166,7 @@ function Role() {
             const token = localStorage.getItem('token');
 
             const dataObject = formDatas;
-            const response = await axios.patch(`${config.API_HOST}/roles/${selectedRoleId}`, JSON.stringify(dataObject), {
+            const response = await axios.patch(`${config.API_HOST}/Secteurs/${selectedSecteurId}`, JSON.stringify(dataObject), {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -181,32 +181,32 @@ function Role() {
             handleCloseDialog()
             closeModal()
         }
-        await fetchRole();
+        await fetchSecteur();
     }
 
 
     const columns = [
         { Header: "Numero", accessor: "numero" },
-        { Header: "Role", accessor: "role" },
+        { Header: "Secteur", accessor: "Secteur" },
         { Header: "Action", accessor: "action", className: "text-center" },
 
     ];
 
-    const dataTable = role.map((role, index) => ({
-        numero: (<_Cellule valeur={(index + 1).toString()} />),
-        role: (<_Cellule valeur={role.labelRole} />),
+    const dataTable = Secteur.map((Secteur, index) => ({
+        numero: (<_Cellule valeur={index + 1} />),
+        Secteur: (<_Cellule valeur={Secteur.labelSecteur} />),
         action: (
             <>
                 <div className="flex justify-center space-x-5">
                     <MdEdit
                         className="text-blue-500 cursor-pointer"
                         size={20}
-                        onClick={() => getRoleById(role.id)}
+                        onClick={() => getSecteurById(Secteur.id)}
                     />
                     <MdDelete
                         className="text-red-500 cursor-pointer"
                         size={20}
-                        onClick={() => handleDelete(role.id)}
+                        onClick={() => handleDelete(Secteur.id)}
                     />
                 </div>
             </>
@@ -219,7 +219,7 @@ function Role() {
                 className={`transition-all duration-700 ease-in-out px-5 transform`}>
                 <_Table
                     entriesPerPage={{ defaultValue: 50, entries: [10, 25, 50, 100] }}
-                    title={"Liste des roles"}
+                    title={"Liste des Secteurs"}
                     canSearch={true}
                     table={{ columns, rows: dataTable }}
                     pagination={true}
@@ -243,7 +243,7 @@ function Role() {
             >
                 <div className="modal-content rounded-lg shadow-lg px-5 py-2 max-w-lg w-full md:w-2/3 lg:w-2/3 relative" style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }}>
                     <div className="flex justify-between">
-                        <h2 className="text-xl mt-2 font-semibold">{dialogType === 'editRole' ? 'Modifier un rôle' : 'Ajouter un rôle'}</h2>
+                        <h2 className="text-xl mt-2 font-semibold">{dialogType === 'editSecteur' ? 'Modifier un Secteur' : 'Ajouter un Secteur'}</h2>
                         <button onClick={closeModal} className="close-button text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
                     </div>
                     <hr className='py-2' />
@@ -251,17 +251,17 @@ function Role() {
                     <div className=''>
                         <_TextInput
                             type="text"
-                            name="labelRole"
-                            placeholder="Rôle ..."
-                            value={formDatas.labelRole}
+                            name="labelSecteur"
+                            placeholder="Secteur ..."
+                            value={formDatas.labelSecteur}
                             onChange={handleChange}
-                            labelLabel="Label rôle"
+                            labelLabel="Label Secteur"
                         />
                     </div>
                     <div className="mt-4 flex justify-end">
                         <_BtnText
                             text="Enregistrer"
-                            onClick={dialogType === 'editRole' ? handleEdit : handleAdd}
+                            onClick={dialogType === 'editSecteur' ? handleEdit : handleAdd}
                             variant="primary"
                             icon={FaCheck}
                             iconPosition="left"
@@ -273,25 +273,25 @@ function Role() {
                 open={dialogOpen}
                 onClose={handleCloseDialog}
                 onConfirm={
-                    dialogType === 'deleteRole'
+                    dialogType === 'deleteSecteur'
                         ? handleDeleteConfirm
-                        : dialogType === 'editRole'
+                        : dialogType === 'editSecteur'
                             ? handleEditConfirm
                             : handleAddConfirm
                 }
                 title={
-                    dialogType === 'deleteRole'
-                        ? deleteRoleMessageType
-                        : dialogType === 'editRole'
-                            ? editRoleMessageType
-                            : addRoleMessageType
+                    dialogType === 'deleteSecteur'
+                        ? deleteSecteurMessageType
+                        : dialogType === 'editSecteur'
+                            ? editSecteurMessageType
+                            : addSecteurMessageType
                 }
                 message={
-                    dialogType === 'deleteRole'
-                        ? deleteRoleMessage
-                        : dialogType === 'editRole'
-                            ? editRoleMessage
-                            : addRoleMessage
+                    dialogType === 'deleteSecteur'
+                        ? deleteSecteurMessage
+                        : dialogType === 'editSecteur'
+                            ? editSecteurMessage
+                            : addSecteurMessage
                 }
             />
         </>
@@ -299,4 +299,4 @@ function Role() {
 
 }
 
-export default Role
+export default Secteur

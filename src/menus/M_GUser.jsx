@@ -4,6 +4,9 @@ import _NavBar from '../components/_NavBar';
 import _SideBarUser from '../components/SideBar/_SideBarUser';
 import Utilisateur from '../pages/gestionUtilisateur/Utilisateur';
 import Role from '../pages/gestionUtilisateur/Role';
+import Poste from '../pages/gestionUtilisateur/Poste';
+import Chaine from '../pages/gestionUtilisateur/Chaine';
+import Secteur from '../pages/gestionUtilisateur/Secteur';
 
 function M_GUser() {
 
@@ -24,6 +27,9 @@ function M_GUser() {
                     <Routes>
                         <Route path="utilisateur" element={<Utilisateur />} />
                         <Route path="role" element={<Role />} />
+                        <Route path="poste" element={<Poste />} />
+                        <Route path="chaine" element={<Chaine />} />
+                        <Route path="secteur" element={<Secteur />} />
                     </Routes>
                 </div>
             </div>

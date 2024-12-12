@@ -17,37 +17,37 @@ import _UploadImage from "../../components/_UploadImage";
 import { data } from "react-router-dom";
 Modal.setAppElement('#root');
 
-function Role() {
+function Chaine() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [role, setRole] = useState([]);
+    const [Chaine, setChaine] = useState([]);
     const [dialogType, setDialogType] = useState(null);
-    const [selectedRole, setSelectedRole] = useState(null);
-    const [selectedRoleId, setSelectedRoleId] = useState(null);
+    const [selectedChaine, setSelectedChaine] = useState(null);
+    const [selectedChaineId, setSelectedChaineId] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
     const initialFormState = {
-        labelRole: '',
+        labelChaine: '',
     }
     const [formDatas, setFormDatas] = useState(initialFormState);
 
-    const deleteRoleMessage = "Voulez-vous vraiment supprimer ce rôle ?"
-    const deleteRoleMessageType = "Confirmation de Suppression"
+    const deleteChaineMessage = "Voulez-vous vraiment supprimer ce Chaine ?"
+    const deleteChaineMessageType = "Confirmation de Suppression"
 
-    const addRoleMessage = "Voulez-vous vraiment ajouter ce rôle ?"
-    const addRoleMessageType = "Confirmation d'ajout"
+    const addChaineMessage = "Voulez-vous vraiment ajouter ce Chaine ?"
+    const addChaineMessageType = "Confirmation d'ajout"
 
-    const editRoleMessage = "Voulez-vous vraiment modifier ce rôle ?"
-    const editRoleMessageType = "Confirmation de modification"
+    const editChaineMessage = "Voulez-vous vraiment modifier ce Chaine ?"
+    const editChaineMessageType = "Confirmation de modification"
 
     useEffect(() => {
-        fetchRole()
+        fetchChaine()
     }, [])
 
-    const fetchRole = async () => {
+    const fetchChaine = async () => {
         try {
             const token = localStorage.getItem('token');
 
-            const response = await axios.get(`${config.API_HOST}/roles`, {
+            const response = await axios.get(`${config.API_HOST}/Chaines`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ function Role() {
 
             })
 
-            setRole(response.data);
+            setChaine(response.data);
 
         } catch (error) {
             console.error('Error fetching categories:', error);
@@ -69,7 +69,7 @@ function Role() {
         setModalIsOpen(false);
         setFormDatas(initialFormState);
         setDialogType(null);
-        setSelectedRole(null)
+        setSelectedChaine(null)
     }
     const handleOpenDialog = (type) => {
         setDialogType(type);
@@ -78,12 +78,12 @@ function Role() {
     const handleCloseDialog = () => {
         setDialogOpen(false);
         setDialogType(null);
-        setSelectedRole(null);
-        setSelectedRoleId(null)
+        setSelectedChaine(null);
+        setSelectedChaineId(null)
     }
 
     const handleAdd = (e) => {
-        handleOpenDialog('addRole')
+        handleOpenDialog('addChaine')
     }
 
     const handleChange = (e) => {
@@ -97,7 +97,7 @@ function Role() {
     const handleAddConfirm = async () => {
         try {
             const dataObject = formDatas;
-            const response = await axios.post(`${config.API_HOST}/roles`, JSON.stringify(dataObject), {
+            const response = await axios.post(`${config.API_HOST}/Chaines`, JSON.stringify(dataObject), {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -106,22 +106,22 @@ function Role() {
             handleCloseDialog();
             closeModal()
             addNotify({ message: response.data.message });
-            await fetchRole()
+            await fetchChaine()
         } catch (error) {
             errorNotify({ message: error.response.data.message });
             handleCloseDialog();
         }
     }
 
-    const handleDelete = async (roleId) => {
-        handleOpenDialog('deleteRole')
-        setSelectedRoleId(roleId)
+    const handleDelete = async (ChaineId) => {
+        handleOpenDialog('deleteChaine')
+        setSelectedChaineId(ChaineId)
     }
 
     const handleDeleteConfirm = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.delete(`${config.API_HOST}/roles/${selectedRoleId}`, {
+            const response = await axios.delete(`${config.API_HOST}/Chaines/${selectedChaineId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ function Role() {
 
             addNotify({ message: response.data.message })
             handleCloseDialog()
-            await fetchRole()
+            await fetchChaine()
         } catch (error) {
             errorNotify({ message: error.response.data.message })
             handleCloseDialog()
@@ -139,16 +139,16 @@ function Role() {
 
     }
 
-    const handleEdit = async (roleId) => {
-        handleOpenDialog('editRole')
+    const handleEdit = async (ChaineId) => {
+        handleOpenDialog('editChaine')
     }
 
-    const getRoleById = async (roleId) => {
-        setDialogType('editRole')
+    const getChaineById = async (ChaineId) => {
+        setDialogType('editChaine')
         await openModal();
-        setSelectedRoleId(roleId)
+        setSelectedChaineId(ChaineId)
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${config.API_HOST}/roles/${roleId}`, {
+        const response = await axios.get(`${config.API_HOST}/Chaines/${ChaineId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ function Role() {
         })
 
         setFormDatas({
-            labelRole: response.data.labelRole,
+            labelChaine: response.data.labelChaine,
         })
     }
 
@@ -166,7 +166,7 @@ function Role() {
             const token = localStorage.getItem('token');
 
             const dataObject = formDatas;
-            const response = await axios.patch(`${config.API_HOST}/roles/${selectedRoleId}`, JSON.stringify(dataObject), {
+            const response = await axios.patch(`${config.API_HOST}/Chaines/${selectedChaineId}`, JSON.stringify(dataObject), {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -181,32 +181,32 @@ function Role() {
             handleCloseDialog()
             closeModal()
         }
-        await fetchRole();
+        await fetchChaine();
     }
 
 
     const columns = [
         { Header: "Numero", accessor: "numero" },
-        { Header: "Role", accessor: "role" },
+        { Header: "Chaine", accessor: "Chaine" },
         { Header: "Action", accessor: "action", className: "text-center" },
 
     ];
 
-    const dataTable = role.map((role, index) => ({
-        numero: (<_Cellule valeur={(index + 1).toString()} />),
-        role: (<_Cellule valeur={role.labelRole} />),
+    const dataTable = Chaine.map((Chaine, index) => ({
+        numero: (<_Cellule valeur={index + 1} />),
+        Chaine: (<_Cellule valeur={Chaine.labelChaine} />),
         action: (
             <>
                 <div className="flex justify-center space-x-5">
                     <MdEdit
                         className="text-blue-500 cursor-pointer"
                         size={20}
-                        onClick={() => getRoleById(role.id)}
+                        onClick={() => getChaineById(Chaine.id)}
                     />
                     <MdDelete
                         className="text-red-500 cursor-pointer"
                         size={20}
-                        onClick={() => handleDelete(role.id)}
+                        onClick={() => handleDelete(Chaine.id)}
                     />
                 </div>
             </>
@@ -219,7 +219,7 @@ function Role() {
                 className={`transition-all duration-700 ease-in-out px-5 transform`}>
                 <_Table
                     entriesPerPage={{ defaultValue: 50, entries: [10, 25, 50, 100] }}
-                    title={"Liste des roles"}
+                    title={"Liste des Chaines"}
                     canSearch={true}
                     table={{ columns, rows: dataTable }}
                     pagination={true}
@@ -243,7 +243,7 @@ function Role() {
             >
                 <div className="modal-content rounded-lg shadow-lg px-5 py-2 max-w-lg w-full md:w-2/3 lg:w-2/3 relative" style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }}>
                     <div className="flex justify-between">
-                        <h2 className="text-xl mt-2 font-semibold">{dialogType === 'editRole' ? 'Modifier un rôle' : 'Ajouter un rôle'}</h2>
+                        <h2 className="text-xl mt-2 font-semibold">{dialogType === 'editChaine' ? 'Modifier un Chaine' : 'Ajouter un Chaine'}</h2>
                         <button onClick={closeModal} className="close-button text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
                     </div>
                     <hr className='py-2' />
@@ -251,17 +251,17 @@ function Role() {
                     <div className=''>
                         <_TextInput
                             type="text"
-                            name="labelRole"
-                            placeholder="Rôle ..."
-                            value={formDatas.labelRole}
+                            name="labelChaine"
+                            placeholder="Chaine ..."
+                            value={formDatas.labelChaine}
                             onChange={handleChange}
-                            labelLabel="Label rôle"
+                            labelLabel="Label Chaine"
                         />
                     </div>
                     <div className="mt-4 flex justify-end">
                         <_BtnText
                             text="Enregistrer"
-                            onClick={dialogType === 'editRole' ? handleEdit : handleAdd}
+                            onClick={dialogType === 'editChaine' ? handleEdit : handleAdd}
                             variant="primary"
                             icon={FaCheck}
                             iconPosition="left"
@@ -273,25 +273,25 @@ function Role() {
                 open={dialogOpen}
                 onClose={handleCloseDialog}
                 onConfirm={
-                    dialogType === 'deleteRole'
+                    dialogType === 'deleteChaine'
                         ? handleDeleteConfirm
-                        : dialogType === 'editRole'
+                        : dialogType === 'editChaine'
                             ? handleEditConfirm
                             : handleAddConfirm
                 }
                 title={
-                    dialogType === 'deleteRole'
-                        ? deleteRoleMessageType
-                        : dialogType === 'editRole'
-                            ? editRoleMessageType
-                            : addRoleMessageType
+                    dialogType === 'deleteChaine'
+                        ? deleteChaineMessageType
+                        : dialogType === 'editChaine'
+                            ? editChaineMessageType
+                            : addChaineMessageType
                 }
                 message={
-                    dialogType === 'deleteRole'
-                        ? deleteRoleMessage
-                        : dialogType === 'editRole'
-                            ? editRoleMessage
-                            : addRoleMessage
+                    dialogType === 'deleteChaine'
+                        ? deleteChaineMessage
+                        : dialogType === 'editChaine'
+                            ? editChaineMessage
+                            : addChaineMessage
                 }
             />
         </>
@@ -299,4 +299,4 @@ function Role() {
 
 }
 
-export default Role
+export default Chaine
