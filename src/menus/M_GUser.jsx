@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import _NavBar from '../components/_NavBar';
 import _SideBarUser from '../components/SideBar/_SideBarUser';
 import Utilisateur from '../pages/gestionUtilisateur/Utilisateur';
+import Role from '../pages/gestionUtilisateur/Role';
 
 function M_GUser() {
 
@@ -22,6 +23,7 @@ function M_GUser() {
                 <div className='mt-[0vh]'>
                     <Routes>
                         <Route path="utilisateur" element={<Utilisateur />} />
+                        <Route path="role" element={<Role />} />
                     </Routes>
                 </div>
             </div>

@@ -34,14 +34,26 @@ function _SideBarUser() {
                     <div className="px-1 py-1 mt-2">
                         <div className='rounded-lg py-2 shadow-slate-700 shadow-2xl'>
                             <NavLink
-                                to="/utilisateur/utilisateur"
-                                className={({ isActive }) => `flex space-x-5 h-[8vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                to="/utilisateur/role"
+                                className={({ isActive }) => `flex space-x-5 h-[5vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
                                         <MdDashboard className='w-5 h-5' />
                                     </div>
                                     <div>
-                                        Personnel
+                                        Rôle
+                                    </div>
+                                </div>
+                            </NavLink>
+                            <NavLink
+                                to="/utilisateur/utilisateur"
+                                className={({ isActive }) => `flex space-x-5 h-[5vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                <div className='flex space-x-5'>
+                                    <div>
+                                        <MdDashboard className='w-5 h-5' />
+                                    </div>
+                                    <div>
+                                        Utilisateur
                                     </div>
                                 </div>
                             </NavLink>
