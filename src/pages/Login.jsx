@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
 import { errorNotify } from '../components/Notification/ToastUtil';
 import _Carousel from '../components/_carousel';
-import _Loading from '../components/_Loading';
+import {_LoadingFull} from '../components/_Loading';
 import config from '../../config.json'
 import axios from 'axios';
 import { AuthContext } from '../AuthContext';
@@ -133,7 +133,7 @@ function Login() {
                 </div>
             </div>
             {isLoading && (
-                <_Loading />
+                <_LoadingFull />
             )}
         </>
     );

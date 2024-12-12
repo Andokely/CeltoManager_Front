@@ -1,21 +1,29 @@
 import { useState } from "react";
 import { _EnTete } from "../../components/_Entete"
 import { _BtnIcon, _BtnText } from "../../components/_Bouton";
-import { FaUserFriends } from "react-icons/fa";
 import { FaPlus, FaCheck } from 'react-icons/fa';
+import { MdDelete, MdEdit } from "react-icons/md";
 import Modal from 'react-modal';
 import { _TextInput } from "../../components/_Input";
 import Select from 'react-select';
 import _ConfirmationDialog from "../../components/_ConfirmationDialog";
-import { addNotify } from "../../components/Notification/ToastUtil";
+import { addNotify, errorNotify } from "../../components/Notification/ToastUtil";
 import axios from "axios";
 import config from '../../../config.json'
+import _Table from "../../components/_Table";
+import { useEffect } from "react";
+import { _Cellule, _CellulePhoto } from "../../components/_Cellule";
+import _UploadImage from "../../components/_UploadImage";
+import { data } from "react-router-dom";
 Modal.setAppElement('#root');
 
 function Utilisateur() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [users, setUsers] = useState([]);
     const [dialogType, setDialogType] = useState(null);
-    const [selectedRole, setSelectedRole] = useState(null)
+    const [selectedRole, setSelectedRole] = useState(null);
+    const [selectedUserId, setSelectedUserId] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
     const initialFormState = {
         pseudo: '',
@@ -34,6 +42,31 @@ function Utilisateur() {
 
     const editUserMessage = "Voulez-vous vraiment modifier cet utilisateur ?"
     const editUserMessageType = "Confirmation de modification"
+
+    useEffect(() => {
+        fetchUsers()
+    }, [])
+
+    const fetchUsers = async () => {
+        try {
+            const token = localStorage.getItem('token');
+
+            const response = await axios.get(`${config.API_HOST}/users`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+
+            })
+
+            setUsers(response.data.users);
+
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const openModal = () => setModalIsOpen(true);
     const closeModal = () => {
@@ -87,26 +120,103 @@ function Utilisateur() {
     };
 
     const handleAddConfirm = async () => {
-        const dataObject = formDatas;
-        await axios.post(`${config.API_HOST}/users/register`, JSON.stringify(dataObject), {
-            headers: {
-                'Content-Type': 'application/json',
-            },
+        try {
+            const dataObject = formDatas;
+            const response = await axios.post(`${config.API_HOST}/users/register`, JSON.stringify(dataObject), {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
 
-        })
-
-        handleCloseDialog();
-        closeModal()
-        addNotify({ message: "L'utilisateur a été ajouté avec succès" });
-        // await fetchModele();
+            })
+            handleCloseDialog();
+            closeModal()
+            addNotify({ message: response.data.message });
+            await fetchUsers()
+        } catch (error) {
+            errorNotify({ message: "Cet email est déjà utilisé. Veuillez en choisir un autre." });
+            handleCloseDialog();
+        }
     }
+
+    const handleDelete = async (userId) => {
+        handleOpenDialog('deleteUser')
+        setSelectedUserId(userId)
+    }
+
+    const handleDeleteConfirm = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${config.API_HOST}/users/${selectedUserId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+
+            })
+
+            addNotify({ message: response.data.message })
+            handleCloseDialog()
+            await fetchUsers()
+        } catch (error) {
+            errorNotify({ message: "Vous n'êtes pas autorisé à effectuer cette suppression " })
+            handleCloseDialog()
+        }
+
+    }
+
+    const handleEditConfirm = () => {
+
+    }
+
+
+    const columns = [
+        { Header: "Photo", accessor: "photo" },
+        { Header: "Nom et prenom", accessor: "nom" },
+        { Header: "Email", accessor: "email" },
+        { Header: "Pseudo", accessor: "pseudo", className: "text-center" },
+        { Header: "Rôle", accessor: "role", className: "text-center" },
+        { Header: "Action", accessor: "action", className: "text-center" },
+    ];
+
+    const dataTable = users.map((user) => ({
+        photo: (<_CellulePhoto valeur={user.photo} />),
+        nom: (<_Cellule valeur={user.nom} />),
+        email: (<_Cellule valeur={user.email} />),
+        pseudo: (<_Cellule valeur={user.pseudo} />),
+        role: (<_Cellule valeur={user.role} />),
+        action: (
+            <>
+                <div className="flex justify-center space-x-5">
+                    <MdEdit
+                        className="text-blue-500 cursor-pointer"
+                        size={20}
+                    // onClick={() => handleViewDetails(emp)}
+                    />
+                    <MdDelete
+                        className="text-red-500 cursor-pointer"
+                        size={20}
+                        onClick={() => handleDelete(user.id)}
+                    />
+                </div>
+            </>
+        ),
+    }));
 
 
 
     return (
         <>
-            <div className="items-center flex justify-center">
-                <_EnTete titre={"Utilisateur"} valeur={"Liste des utilisateurs"} icone={<FaUserFriends />} color={"bg-green-500"} />
+            <div
+                className={`transition-all duration-700 ease-in-out px-5 transform`}>
+                <_Table
+                    entriesPerPage={{ defaultValue: 50, entries: [10, 25, 50, 100] }}
+                    title={"Liste des utilisateurs"}
+                    canSearch={true}
+                    table={{ columns, rows: dataTable }}
+                    pagination={true}
+                    loading={loading}
+                // searchQuery={searchQuery}
+                />
             </div>
             <_BtnIcon
                 icon={FaPlus}
@@ -179,6 +289,7 @@ function Utilisateur() {
                             // onChange={handleChange}
                             labelLabel="Mot de passe"
                         /> */}
+                        {/* <_UploadImage /> */}
                         <_TextInput
                             type="text"
                             name="motDePasse"
