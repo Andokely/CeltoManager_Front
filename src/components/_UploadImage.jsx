@@ -1,40 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import config from '../../config.json'
+import { addNotify, errorNotify } from './Notification/ToastUtil';
+import { saveAs } from 'file-saver';
 
-function _UploadImage() {
+const _UploadImage = ({ oldImage, userId, onImageChange }, ref) => {
     const [image, setImage] = useState(null);
     const [preview, setPreview] = useState(null);
-    const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        return () => {
+            if (preview) {
+                URL.revokeObjectURL(preview);
+            }
+        };
+    }, [preview]);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        console.log(file.name)
         if (file) {
-            setImage(file);
+            setImage(file.name);
             setPreview(URL.createObjectURL(file));
+            onImageChange(file.name);
         }
     };
 
-    const handleSubmit = async (e) => {
-        console.log(image)
-    };
+    const handleEditImage = async () => {
+
+        console.log("handleEditImage")
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.patch(`${config.API_HOST}/users/${userId}`, JSON.stringify({ photo: image }), {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+
+            })
+            addNotify({ message: "Votre profil a été mis à jour avec succès !" });
+        } catch (error) {
+            const message = error.response?.data?.message || "Une erreur s'est produite";
+            errorNotify({ message });
+        }
+    }
+
+    React.useImperativeHandle(ref, () => ({
+        handleEditImage: handleEditImage
+    }));
 
     return (
         <div className='mb-4'>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="image">Sélectionner une image :</label>
-                    <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
+            <div className='py-2 '>
+                <input
+                    style={{ backgroundColor: 'var(--primary-1)', borderColor: 'var(--border-color)' }}
+                    className='p-2 rounded-lg'
+                    type="file" id="image" accept="image/*" onChange={handleImageChange} />
+            </div>
+            {preview ? (
+                <div className='flex justify-center py-5 rounded-lg' style={{ backgroundColor: 'var(--primary-1)', borderColor: 'var(--border-color)' }}>
+                    <img src={preview} alt="Prévisualisation" className='w-[200px] h-[200px] rounded-full' />
                 </div>
-                {preview && (
-                    <div>
-                        <img src={preview} alt="Prévisualisation" className='w-[120px] h-[120px] rounded-full' />
-                    </div>
-                )}
-                 <button type="button">Enregistrer</button>
-            </form>
+            ) : (
+                <div className='flex justify-center py-5 rounded-lg' style={{ backgroundColor: 'var(--primary-1)', borderColor: 'var(--border-color)' }}>
+                    <img src={oldImage} alt="oldImage" className='w-[200px] h-[200px] rounded-full' />
+                </div>
+            )}
         </div>
     );
 }
 
-export default _UploadImage;
+export default React.forwardRef(_UploadImage);

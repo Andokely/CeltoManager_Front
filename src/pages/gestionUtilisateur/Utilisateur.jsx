@@ -135,7 +135,7 @@ function Utilisateur() {
             addNotify({ message: response.data.message });
             await fetchUsers()
         } catch (error) {
-            errorNotify({ message: "Cet email est déjà utilisé. Veuillez en choisir un autre." });
+            errorNotify({ message: error.response.data.message });
             handleCloseDialog();
         }
     }

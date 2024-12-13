@@ -6,8 +6,9 @@ export const _TextInput = ({
     name,
     placeholder = '',
     value = '',
-    onChange = () => { },
+    onChange = () => {},
     labelLabel = '',
+    disabled = false, // Nouvelle propriété avec une valeur par défaut
 }) => {
     return (
         <div className='flex flex-col mb-4'>
@@ -20,7 +21,8 @@ export const _TextInput = ({
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
-                className="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700"
+                disabled={disabled} // Ajout de la gestion du mode "disabled"
+                className={`px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700 ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                 style={{ backgroundColor: 'var(--primary-1)', borderColor: 'var(--border-color)' }}
             />
         </div>
@@ -34,6 +36,7 @@ _TextInput.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
     labelLabel: PropTypes.string,
+    disabled: PropTypes.bool, // Déclaration de la nouvelle propriété
 };
 
 export const _DateInput = ({

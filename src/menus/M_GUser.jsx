@@ -7,6 +7,7 @@ import Role from '../pages/gestionUtilisateur/Role';
 import Poste from '../pages/gestionUtilisateur/Poste';
 import Chaine from '../pages/gestionUtilisateur/Chaine';
 import Secteur from '../pages/gestionUtilisateur/Secteur';
+import Profil from '../pages/Profil';
 
 function M_GUser() {
 
@@ -30,6 +31,7 @@ function M_GUser() {
                         <Route path="poste" element={<Poste />} />
                         <Route path="chaine" element={<Chaine />} />
                         <Route path="secteur" element={<Secteur />} />
+                        <Route path="profil" element={<Profil />} />
                     </Routes>
                 </div>
             </div>
