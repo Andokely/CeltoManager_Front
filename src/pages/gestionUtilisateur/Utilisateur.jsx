@@ -8,13 +8,11 @@ import { _TextInput } from "../../components/_Input";
 import Select from 'react-select';
 import _ConfirmationDialog from "../../components/_ConfirmationDialog";
 import { addNotify, errorNotify } from "../../components/Notification/ToastUtil";
-import axios from "axios";
-import config from '../../../config.json'
+import api from "../../api";
 import _Table from "../../components/_Table";
 import { useEffect } from "react";
 import { _Cellule, _CellulePhoto } from "../../components/_Cellule";
 import _UploadImage from "../../components/_UploadImage";
-import { data } from "react-router-dom";
 Modal.setAppElement('#root');
 
 function Utilisateur() {
@@ -49,16 +47,7 @@ function Utilisateur() {
 
     const fetchUsers = async () => {
         try {
-            const token = localStorage.getItem('token');
-
-            const response = await axios.get(`${config.API_HOST}/users`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
-
+            const response = await api.get(`/users`)
             setUsers(response.data.users);
 
         } catch (error) {
@@ -88,7 +77,6 @@ function Utilisateur() {
 
     const handleAdd = (e) => {
         handleOpenDialog('addUser')
-        console.log(formDatas)
     }
 
     const roles = [
@@ -125,7 +113,7 @@ function Utilisateur() {
     const handleAddConfirm = async () => {
         try {
             const dataObject = formDatas;
-            const response = await axios.post(`${config.API_HOST}/users/register`, JSON.stringify(dataObject), {
+            const response = await api.post(`/users/register`, JSON.stringify(dataObject), {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -148,14 +136,7 @@ function Utilisateur() {
 
     const handleDeleteConfirm = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await axios.delete(`${config.API_HOST}/users/${selectedUserId}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            const response = await api.delete(`/users/${selectedUserId}`)
 
             addNotify({ message: response.data.message })
             handleCloseDialog()
@@ -175,14 +156,8 @@ function Utilisateur() {
         setDialogType('editUser')
         await openModal();
         setSelectedUserId(userId)
-        const token = localStorage.getItem('token');
-        const response = await axios.get(`${config.API_HOST}/users/${userId}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
 
-        })
+        const response = await api.get(`/users/${userId}`)
 
         setFormDatas({
             pseudo: response.data.user.pseudo,
@@ -198,16 +173,8 @@ function Utilisateur() {
 
     const handleEditConfirm = async () => {
         try {
-            const token = localStorage.getItem('token');
-
             const dataObject = formDatas;
-            const response = await axios.patch(`${config.API_HOST}/users/${selectedUserId}`, JSON.stringify(dataObject), {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            const response = await api.patch(`/users/${selectedUserId}`, JSON.stringify(dataObject))
             handleCloseDialog();
             closeModal()
             addNotify({ message: response.data.message });

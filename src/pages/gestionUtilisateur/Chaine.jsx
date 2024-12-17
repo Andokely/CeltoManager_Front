@@ -5,16 +5,13 @@ import { FaPlus, FaCheck } from 'react-icons/fa';
 import { MdDelete, MdEdit } from "react-icons/md";
 import Modal from 'react-modal';
 import { _TextInput } from "../../components/_Input";
-import Select from 'react-select';
 import _ConfirmationDialog from "../../components/_ConfirmationDialog";
 import { addNotify, errorNotify } from "../../components/Notification/ToastUtil";
-import axios from "axios";
-import config from '../../../config.json'
 import _Table from "../../components/_Table";
 import { useEffect } from "react";
 import { _Cellule, _CellulePhoto } from "../../components/_Cellule";
 import _UploadImage from "../../components/_UploadImage";
-import { data } from "react-router-dom";
+import api from "../../api";
 Modal.setAppElement('#root');
 
 function Chaine() {
@@ -45,18 +42,8 @@ function Chaine() {
 
     const fetchChaine = async () => {
         try {
-            const token = localStorage.getItem('token');
-
-            const response = await axios.get(`${config.API_HOST}/Chaines`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
-
+            const response = await api.get(`/Chaines`)
             setChaine(response.data);
-
         } catch (error) {
             console.error('Error fetching categories:', error);
         } finally {
@@ -98,12 +85,7 @@ function Chaine() {
     const handleAddConfirm = async () => {
         try {
             const dataObject = formDatas;
-            const response = await axios.post(`${config.API_HOST}/Chaines`, JSON.stringify(dataObject), {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            const response = await api.post(`/Chaines`, JSON.stringify(dataObject))
             handleCloseDialog();
             closeModal()
             addNotify({ message: response.data.message });
@@ -121,15 +103,7 @@ function Chaine() {
 
     const handleDeleteConfirm = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await axios.delete(`${config.API_HOST}/Chaines/${selectedChaineId}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
-
+            const response = await api.delete(`/Chaines/${selectedChaineId}`)
             addNotify({ message: response.data.message })
             handleCloseDialog()
             await fetchChaine()
@@ -148,15 +122,7 @@ function Chaine() {
         setDialogType('editChaine')
         await openModal();
         setSelectedChaineId(ChaineId)
-        const token = localStorage.getItem('token');
-        const response = await axios.get(`${config.API_HOST}/Chaines/${ChaineId}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-
-        })
-
+        const response = await api.get(`/Chaines/${ChaineId}`)
         setFormDatas({
             labelChaine: response.data.labelChaine,
         })
@@ -164,16 +130,8 @@ function Chaine() {
 
     const handleEditConfirm = async () => {
         try {
-            const token = localStorage.getItem('token');
-
             const dataObject = formDatas;
-            const response = await axios.patch(`${config.API_HOST}/Chaines/${selectedChaineId}`, JSON.stringify(dataObject), {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            const response = await api.patch(`/Chaines/${selectedChaineId}`, JSON.stringify(dataObject))
             handleCloseDialog();
             closeModal()
             addNotify({ message: response.data.message });

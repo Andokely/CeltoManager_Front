@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { decodeToken } from "../fonction";
-import axios from "axios";
-import config from '../../config.json'
+import api from "../api";
 import { _TextInput } from "../components/_Input";
 import { _BtnIcon, _BtnText } from "../components/_Bouton";
 import { FaCheck } from 'react-icons/fa';
@@ -61,15 +60,8 @@ const Profil = () => {
 
     const getUserById = async (userId) => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await axios.get(`${config.API_HOST}/users/${userId}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            });
+            const response = await api.get(`/users/${userId}`);
             setUserData(response.data.user);
-            (response.data.user);
         } catch (error) {
             console.error("Erreur lors de la récupération des données utilisateur :", error);
         }

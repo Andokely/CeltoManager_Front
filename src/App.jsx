@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import '/color.css';
 import ProtectedRoute from './ProtectedRoute';
 import ErrorPage from './pages/ErrorPage';
+import SessionExpired from './pages/SessionExpired';
 
 function App() {
   return (
@@ -17,14 +18,15 @@ function App() {
       <Routes>
         <Route path="/" element={<MainMenu />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/personnel/*" element={<ProtectedRoute><M_GPers /></ProtectedRoute>} />
+        <Route path="/personnel/*" element={<ProtectedRoute><M_GPers /></ProtectedRoute>} />
         <Route path="/production/*" element={<ProtectedRoute><M_GProd /></ProtectedRoute>} />
-        <Route path="/utilisateur/*" element={<ProtectedRoute><M_GUser /></ProtectedRoute>} /> */}
-        <Route path="/personnel/*" element={<M_GPers />} />
+        <Route path="/utilisateur/*" element={<ProtectedRoute><M_GUser /></ProtectedRoute>} />
+        {/* <Route path="/personnel/*" element={<M_GPers />} />
         <Route path="/production/*" element={<M_GProd />} />
-        <Route path="/utilisateur/*" element={<M_GUser />} />
+        <Route path="/utilisateur/*" element={<M_GUser />} /> */}
         <Route path="*" element={<Navigate to="/error" />} />
         <Route path="/error" element={<ErrorPage />} />
+        <Route path="/expired" element={<SessionExpired />} />
       </Routes>
     </>
   );

@@ -5,16 +5,12 @@ import { FaPlus, FaCheck } from 'react-icons/fa';
 import { MdDelete, MdEdit } from "react-icons/md";
 import Modal from 'react-modal';
 import { _TextInput } from "../../components/_Input";
-import Select from 'react-select';
 import _ConfirmationDialog from "../../components/_ConfirmationDialog";
 import { addNotify, errorNotify } from "../../components/Notification/ToastUtil";
-import axios from "axios";
-import config from '../../../config.json'
 import _Table from "../../components/_Table";
 import { useEffect } from "react";
 import { _Cellule, _CellulePhoto } from "../../components/_Cellule";
 import _UploadImage from "../../components/_UploadImage";
-import { data } from "react-router-dom";
 Modal.setAppElement('#root');
 
 function Secteur() {
@@ -45,18 +41,8 @@ function Secteur() {
 
     const fetchSecteur = async () => {
         try {
-            const token = localStorage.getItem('token');
-
-            const response = await axios.get(`${config.API_HOST}/Secteurs`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
-
+            const response = await api.get(`/Secteurs`)
             setSecteur(response.data);
-
         } catch (error) {
             console.error('Error fetching categories:', error);
         } finally {
@@ -98,12 +84,7 @@ function Secteur() {
     const handleAddConfirm = async () => {
         try {
             const dataObject = formDatas;
-            const response = await axios.post(`${config.API_HOST}/Secteurs`, JSON.stringify(dataObject), {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            const response = await api.post(`/Secteurs`, JSON.stringify(dataObject))
             handleCloseDialog();
             closeModal()
             addNotify({ message: response.data.message });
@@ -121,15 +102,7 @@ function Secteur() {
 
     const handleDeleteConfirm = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await axios.delete(`${config.API_HOST}/Secteurs/${selectedSecteurId}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
-
+            const response = await api.delete(`/Secteurs/${selectedSecteurId}`)
             addNotify({ message: response.data.message })
             handleCloseDialog()
             await fetchSecteur()
@@ -148,14 +121,8 @@ function Secteur() {
         setDialogType('editSecteur')
         await openModal();
         setSelectedSecteurId(SecteurId)
-        const token = localStorage.getItem('token');
-        const response = await axios.get(`${config.API_HOST}/Secteurs/${SecteurId}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
 
-        })
+        const response = await api.get(`/Secteurs/${SecteurId}`)
 
         setFormDatas({
             labelSecteur: response.data.labelSecteur,
@@ -164,16 +131,8 @@ function Secteur() {
 
     const handleEditConfirm = async () => {
         try {
-            const token = localStorage.getItem('token');
-
             const dataObject = formDatas;
-            const response = await axios.patch(`${config.API_HOST}/Secteurs/${selectedSecteurId}`, JSON.stringify(dataObject), {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            const response = await api.patch(`/Secteurs/${selectedSecteurId}`, JSON.stringify(dataObject))
             handleCloseDialog();
             closeModal()
             addNotify({ message: response.data.message });

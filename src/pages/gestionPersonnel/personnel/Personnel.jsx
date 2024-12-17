@@ -8,13 +8,12 @@ import { _TextInput, _DateInput } from "../../../components/_Input";
 import Select from 'react-select';
 import _ConfirmationDialog from "../../../components/_ConfirmationDialog";
 import { addNotify, errorNotify } from "../../../components/Notification/ToastUtil";
-import axios from "axios";
-import config from '../../../../config.json'
 import _Table from "../../../components/_Table";
 import { useEffect } from "react";
 import { _Cellule, _CellulePhoto } from "../../../components/_Cellule";
 import _UploadImage from "../../../components/_UploadImage";
 import { convertirDateEnFormatFrancais } from "../../../fonction";
+import api from "../../../api";
 Modal.setAppElement('#root');
 
 function Personnel() {
@@ -66,15 +65,7 @@ function Personnel() {
 
     const fetchPersonnels = async () => {
         try {
-            const token = localStorage.getItem('token');
-
-            const response = await axios.get(`${config.API_HOST}/personnels`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            const response = await api.get("/personnels")
             setPersonnels(response.data.personnels);
         } catch (error) {
             console.error('Error fetching categories:', error);
@@ -85,15 +76,7 @@ function Personnel() {
 
     const fetchPoste = async () => {
         try {
-            const token = localStorage.getItem('token');
-
-            const response = await axios.get(`${config.API_HOST}/postes`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            const response = await api.get("/postes")
             setPostes(response.data);
         } catch (error) {
             console.error('Error fetching categories:', error);
@@ -104,15 +87,7 @@ function Personnel() {
 
     const fetchChaine = async () => {
         try {
-            const token = localStorage.getItem('token');
-
-            const response = await axios.get(`${config.API_HOST}/chaines`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            const response = await api.get("/chaines")
             setChaines(response.data);
         } catch (error) {
             console.error('Error fetching categories:', error);
@@ -123,20 +98,8 @@ function Personnel() {
 
     const fetchSecteur = async () => {
         try {
-            const token = localStorage.getItem('token');
-
-            const response = await axios.get(`${config.API_HOST}/secteurs`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
-
+            const response = await api.get(`/secteurs`)
             setSecteurs(response.data);
-
-
-
         } catch (error) {
             console.error('Error fetching categories:', error);
         } finally {
@@ -236,17 +199,7 @@ function Personnel() {
         try {
             const dataObject = formDatas;
             dataObject["salaire"] = parseFloat(formDatas.salaire)
-
-
-            const token = localStorage.getItem('token');
-
-            const response = await axios.post(`${config.API_HOST}/personnels`, JSON.stringify(dataObject), {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            const response = await api.post(`/personnels`, JSON.stringify(dataObject))
             handleCloseDialog();
             closeModal()
             addNotify({ message: response.data.message });
@@ -264,15 +217,7 @@ function Personnel() {
 
     const handleDeleteConfirm = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await axios.delete(`${config.API_HOST}/personnels/${selectedPersonnelId}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
-
+            const response = await api.delete(`/personnels/${selectedPersonnelId}`)
             addNotify({ message: response.data.message })
             handleCloseDialog()
             await fetchPersonnels()
@@ -291,14 +236,7 @@ function Personnel() {
         setDialogType('editPersonnel')
         await openModal();
         setSelectedPersonnelId(personnelId)
-        const token = localStorage.getItem('token');
-        const response = await axios.get(`${config.API_HOST}/personnels/${personnelId}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-
-        })
+        const response = await api.get(`/personnels/${personnelId}`)
 
         setFormDatas({
             matricule: response.data.matricule,
@@ -331,18 +269,10 @@ function Personnel() {
 
     const handleEditConfirm = async () => {
         try {
-            const token = localStorage.getItem('token');
-
             const dataObject = change;
             dataObject["salaire"] = parseFloat(formDatas.salaire)
 
-            const response = await axios.patch(`${config.API_HOST}/personnels/${selectedPersonnelId}`, JSON.stringify(dataObject), {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            await api.patch(`/personnels/${selectedPersonnelId}`, JSON.stringify(dataObject))
             handleCloseDialog();
             closeModal()
             addNotify({ message: "Personnel mis à jour avec succès" });
@@ -353,7 +283,6 @@ function Personnel() {
         }
         await fetchPersonnels();
     }
-
 
     const columns = [
         { Header: "Matricule", accessor: "matricule" },

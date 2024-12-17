@@ -5,16 +5,14 @@ import { FaPlus, FaCheck } from 'react-icons/fa';
 import { MdDelete, MdEdit } from "react-icons/md";
 import Modal from 'react-modal';
 import { _TextInput } from "../../components/_Input";
-import Select from 'react-select';
 import _ConfirmationDialog from "../../components/_ConfirmationDialog";
 import { addNotify, errorNotify } from "../../components/Notification/ToastUtil";
-import axios from "axios";
 import config from '../../../config.json'
 import _Table from "../../components/_Table";
 import { useEffect } from "react";
 import { _Cellule, _CellulePhoto } from "../../components/_Cellule";
 import _UploadImage from "../../components/_UploadImage";
-import { data } from "react-router-dom";
+import api from "../../api";
 Modal.setAppElement('#root');
 
 function Role() {
@@ -45,16 +43,7 @@ function Role() {
 
     const fetchRole = async () => {
         try {
-            const token = localStorage.getItem('token');
-
-            const response = await axios.get(`${config.API_HOST}/roles`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
-
+            const response = await api.get(`/roles`)
             setRole(response.data);
 
         } catch (error) {
@@ -98,12 +87,7 @@ function Role() {
     const handleAddConfirm = async () => {
         try {
             const dataObject = formDatas;
-            const response = await axios.post(`${config.API_HOST}/roles`, JSON.stringify(dataObject), {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            const response = await api.post(`/roles`, JSON.stringify(dataObject))
             handleCloseDialog();
             closeModal()
             addNotify({ message: response.data.message });
@@ -121,14 +105,7 @@ function Role() {
 
     const handleDeleteConfirm = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await axios.delete(`${config.API_HOST}/roles/${selectedRoleId}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            const response = await api.delete(`/roles/${selectedRoleId}`)
 
             addNotify({ message: response.data.message })
             handleCloseDialog()
@@ -148,14 +125,8 @@ function Role() {
         setDialogType('editRole')
         await openModal();
         setSelectedRoleId(roleId)
-        const token = localStorage.getItem('token');
-        const response = await axios.get(`${config.API_HOST}/roles/${roleId}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
 
-        })
+        const response = await api.get(`/roles/${roleId}`)
 
         setFormDatas({
             labelRole: response.data.labelRole,
@@ -164,16 +135,8 @@ function Role() {
 
     const handleEditConfirm = async () => {
         try {
-            const token = localStorage.getItem('token');
-
             const dataObject = formDatas;
-            const response = await axios.patch(`${config.API_HOST}/roles/${selectedRoleId}`, JSON.stringify(dataObject), {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-
-            })
+            const response = await api.patch(`/roles/${selectedRoleId}`, JSON.stringify(dataObject))
             handleCloseDialog();
             closeModal()
             addNotify({ message: response.data.message });
