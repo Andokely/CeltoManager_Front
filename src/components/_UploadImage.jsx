@@ -26,8 +26,6 @@ const _UploadImage = ({ oldImage, userId, onImageChange }, ref) => {
     };
 
     const handleEditImage = async () => {
-
-        console.log("handleEditImage")
         try {
             const token = localStorage.getItem('token');
             const response = await axios.patch(`${config.API_HOST}/users/${userId}`, JSON.stringify({ photo: image }), {

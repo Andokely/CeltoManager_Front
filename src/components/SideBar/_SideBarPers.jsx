@@ -38,7 +38,7 @@ function _SideBarPers() {
                         <div className='rounded-lg py-2 shadow-slate-700 shadow-2xl'>
                             <NavLink
                                 to="/personnel/liste"
-                                className={({ isActive }) => `flex space-x-5 h-[8vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
                                         <MdDashboard className='w-5 h-5' />
@@ -50,7 +50,7 @@ function _SideBarPers() {
                             </NavLink>
                             <NavLink
                                 to="/planning"
-                                className={({ isActive }) => `flex space-x-5 h-[8vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
                                         <BsCalendar4Week className='w-5 h-5' />
@@ -62,7 +62,7 @@ function _SideBarPers() {
                             </NavLink>
                             <NavLink
                                 to="/client"
-                                className={({ isActive }) => `flex space-x-5 h-[8vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
                                         <MdSupervisedUserCircle className='w-6 h-6' />
@@ -75,7 +75,7 @@ function _SideBarPers() {
 
                             <NavLink
                                 to="/modele"
-                                className={({ isActive }) => `flex space-x-5 h-[8vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
                                         <MdOutlineArchitecture className='w-6 h-6' />
@@ -87,7 +87,7 @@ function _SideBarPers() {
                             </NavLink>
                             <NavLink
                                 to="/of"
-                                className={({ isActive }) => `flex space-x-5 h-[8vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
                                         <MdProductionQuantityLimits className='w-6 h-6' />
@@ -99,7 +99,7 @@ function _SideBarPers() {
                             </NavLink>
                             <NavLink
                                 to="/implantation"
-                                className={({ isActive }) => `flex space-x-5 h-[8vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
                                         <MdOutlineGroupWork className='w-6 h-6' />
@@ -121,7 +121,7 @@ function _SideBarPers() {
                                 <>
                                     <NavLink
                                         to="/classification"
-                                        className={({ isActive }) => `flex space-x-5 h-[8vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                        className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                         <div className='flex space-x-5'>
                                             <div>
                                                 <FaSitemap className='w-6 h-6' />
@@ -133,7 +133,7 @@ function _SideBarPers() {
                                     </NavLink>
                                     {/* <NavLink
                                         to="/produit"
-                                        className={({ isActive }) => `flex space-x-5 h-[8vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                        className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                         <div className='flex space-x-5'>
                                             <div>
                                                 <FaTools className='w-6 h-6' />
@@ -145,7 +145,7 @@ function _SideBarPers() {
                                     </NavLink> */}
                                     <NavLink
                                         to="/categorie"
-                                        className={({ isActive }) => `flex space-x-5 h-[8vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                        className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                         <div className='flex space-x-5'>
                                             <div>
                                                 <MdCategory className='w-6 h-6' />
@@ -157,7 +157,7 @@ function _SideBarPers() {
                                     </NavLink>
                                     <NavLink
                                         to="/operation"
-                                        className={({ isActive }) => `flex space-x-5 h-[8vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                        className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                         <div className='flex space-x-5'>
                                             <div>
                                                 <GiScissors className='w-6 h-6' />
@@ -180,7 +180,7 @@ function _SideBarPers() {
                             {openMenuIndexes.includes(2) && (
                                 <>
                                     <NavLink to="/produit" className={({ isActive }) => (isActive ? 'active' : 'bg-red-500')}>
-                                        <div className='flex space-x-5 h-[8vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
+                                        <div className='flex space-x-5 h-[6vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
                                             <div>
                                                 <MdCategory className='w-6 h-6' />
                                             </div>
@@ -190,7 +190,7 @@ function _SideBarPers() {
                                         </div>
                                     </NavLink>
                                     <NavLink to="/produit" className={({ isActive }) => (isActive ? 'active' : 'bg-red-500')}>
-                                        <div className='flex space-x-5 h-[8vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
+                                        <div className='flex space-x-5 h-[6vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
                                             <div>
                                                 <MdCategory className='w-6 h-6' />
                                             </div>
@@ -200,7 +200,7 @@ function _SideBarPers() {
                                         </div>
                                     </NavLink>
                                     <NavLink to="/produit" className={({ isActive }) => (isActive ? 'active' : 'bg-red-500')}>
-                                        <div className='flex space-x-5 h-[8vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
+                                        <div className='flex space-x-5 h-[6vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
                                             <div>
                                                 <MdCategory className='w-6 h-6' />
                                             </div>
@@ -222,7 +222,7 @@ function _SideBarPers() {
                             {openMenuIndexes.includes(0) && (
                                 <>
                                     <NavLink to="/produit" className={({ isActive }) => (isActive ? 'active' : 'bg-red-500')}>
-                                        <div className='flex space-x-5 h-[8vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
+                                        <div className='flex space-x-5 h-[6vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
                                             <div>
                                                 <MdCategory className='w-6 h-6' />
                                             </div>
@@ -232,7 +232,7 @@ function _SideBarPers() {
                                         </div>
                                     </NavLink>
                                     <NavLink to="/produit" className={({ isActive }) => (isActive ? 'active' : 'bg-red-500')}>
-                                        <div className='flex space-x-5 h-[8vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
+                                        <div className='flex space-x-5 h-[6vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
                                             <div>
                                                 <MdCategory className='w-6 h-6' />
                                             </div>
@@ -242,7 +242,7 @@ function _SideBarPers() {
                                         </div>
                                     </NavLink>
                                     <NavLink to="/produit" className={({ isActive }) => (isActive ? 'active' : 'bg-red-500')}>
-                                        <div className='flex space-x-5 h-[8vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
+                                        <div className='flex space-x-5 h-[6vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
                                             <div>
                                                 <MdCategory className='w-6 h-6' />
                                             </div>
@@ -264,8 +264,8 @@ function _SideBarPers() {
                             {openMenuIndexes.includes(3) && (
                                 <>
                                     <NavLink to="/capteur"
-                                        className={({ isActive }) => `flex space-x-5 h-[8vh] rounded-lg text-white place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
-                                        <div className='flex space-x-5 h-[8vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
+                                        className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                        <div className='flex space-x-5 h-[6vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
                                             <div>
                                                 <MdSensors className='w-6 h-6' />
                                             </div>
@@ -275,8 +275,8 @@ function _SideBarPers() {
                                         </div>
                                     </NavLink>
                                     <NavLink to="/suivieCapteur"
-                                        className={({ isActive }) => `flex space-x-5 h-[8vh] rounded-lg text-white place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
-                                        <div className='flex space-x-5 h-[8vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
+                                        className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                        <div className='flex space-x-5 h-[6vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
                                             <div>
                                                 <TbPhotoSensor3 className='w-6 h-6' />
                                             </div>
@@ -295,7 +295,7 @@ function _SideBarPers() {
 
                 <div className="">
                     <NavLink to="/affichage">
-                        <div className='flex space-x-5 h-[8vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
+                        <div className='flex space-x-5 h-[6vh] hover:bg-slate-700 rounded-lg text-white flex px-8 place-items-center'>
                             <div>
                                 <MdScreenshotMonitor />
                             </div>

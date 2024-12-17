@@ -97,6 +97,7 @@ function Utilisateur() {
         { idRole: 3, labelRole: 'Surveillant' },
         { idRole: 4, labelRole: 'Instructeur' },
         { idRole: 4, labelRole: 'Informaticien' },
+        { idRole: 4, labelRole: 'Mecanicien' },
     ];
 
     const optionsRoles = roles.map(role => ({

@@ -79,7 +79,8 @@ function Poste() {
         setDialogOpen(false);
         setDialogType(null);
         setSelectedPoste(null);
-        setSelectedPosteId(null)
+        setSelectedPosteId(null);
+        closeModal()
     }
 
     const handleAdd = (e) => {

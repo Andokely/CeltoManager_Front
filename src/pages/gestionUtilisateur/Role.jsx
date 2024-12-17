@@ -79,7 +79,8 @@ function Role() {
         setDialogOpen(false);
         setDialogType(null);
         setSelectedRole(null);
-        setSelectedRoleId(null)
+        setSelectedRoleId(null);
+        closeModal()
     }
 
     const handleAdd = (e) => {

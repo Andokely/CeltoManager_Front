@@ -80,6 +80,7 @@ function Chaine() {
         setDialogType(null);
         setSelectedChaine(null);
         setSelectedChaineId(null)
+        closeModal()
     }
 
     const handleAdd = (e) => {

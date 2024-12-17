@@ -15,3 +15,14 @@ export const decodeToken = (token) => {
     }
 };
 
+export const convertirDateEnFormatFrancais = (dateISO) => {
+    const date = new Date(dateISO);
+
+    const jour = date.getDate().toString().padStart(2, '0');
+    const mois = (date.getMonth() + 1).toString().padStart(2, '0');
+    const annee = date.getFullYear();
+
+    return `${jour}/${mois}/${annee}`;
+}
+
+

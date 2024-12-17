@@ -79,7 +79,8 @@ function Secteur() {
         setDialogOpen(false);
         setDialogType(null);
         setSelectedSecteur(null);
-        setSelectedSecteurId(null)
+        setSelectedSecteurId(null);
+        closeModal()
     }
 
     const handleAdd = (e) => {
