@@ -6,7 +6,7 @@ export const _TextInput = ({
     name,
     placeholder = '',
     value = '',
-    onChange = () => {},
+    onChange = () => { },
     labelLabel = '',
     disabled = false, // Nouvelle propriété avec une valeur par défaut
 }) => {
@@ -148,5 +148,50 @@ _PasswordInput.propTypes = {
     onChange: PropTypes.func,
     labelLabel: PropTypes.string,
     showPassword: PropTypes.bool
+};
+
+export const _IntInput = ({
+    name,
+    placeholder = '',
+    value = '',
+    onChange = () => { },
+    labelLabel = '',
+    disabled = false,
+    min,
+    max,
+    step = 1,
+}) => {
+    return (
+        <div className='flex flex-col mb-4'>
+            <label htmlFor={name} className='mb-2' style={{ color: 'var(--text-color)' }}>
+                {labelLabel}:
+            </label>
+            <input
+                type="number"
+                name={name}
+                placeholder={placeholder}
+                value={value}
+                onChange={onChange}
+                disabled={disabled}
+                min={min}
+                max={max}
+                step={step}
+                className={`px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700 ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                style={{ backgroundColor: 'var(--primary-1)', borderColor: 'var(--border-color)' }}
+            />
+        </div>
+    );
+};
+
+_IntInput.propTypes = {
+    name: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    onChange: PropTypes.func,
+    labelLabel: PropTypes.string,
+    disabled: PropTypes.bool,
+    min: PropTypes.number,
+    max: PropTypes.number,
+    step: PropTypes.number,
 };
 

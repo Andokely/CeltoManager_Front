@@ -49,14 +49,14 @@ function _SideBarPers() {
                                 </div>
                             </NavLink>
                             <NavLink
-                                to="/planning"
+                                to="/personnel/pointage"
                                 className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
                                         <BsCalendar4Week className='w-5 h-5' />
                                     </div>
                                     <div>
-                                        Planning
+                                        Pointage
                                     </div>
                                 </div>
                             </NavLink>

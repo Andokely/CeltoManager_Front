@@ -4,7 +4,7 @@ import { _BtnIcon, _BtnText } from "../../../components/_Bouton";
 import { FaPlus, FaCheck } from 'react-icons/fa';
 import { MdDelete, MdEdit } from "react-icons/md";
 import Modal from 'react-modal';
-import { _TextInput, _DateInput } from "../../../components/_Input";
+import { _TextInput, _DateInput, _IntInput } from "../../../components/_Input";
 import Select from 'react-select';
 import _ConfirmationDialog from "../../../components/_ConfirmationDialog";
 import { addNotify, errorNotify } from "../../../components/Notification/ToastUtil";
@@ -43,6 +43,7 @@ function Personnel() {
         chaine: '',
         secteur: '',
         lienPhoto: null,
+        po: '',
     }
     const [formDatas, setFormDatas] = useState(initialFormState);
     const [change, setChange] = useState({});
@@ -199,6 +200,8 @@ function Personnel() {
         try {
             const dataObject = formDatas;
             dataObject["salaire"] = parseFloat(formDatas.salaire)
+            dataObject["po"] = parseInt(formDatas.po)
+
             const response = await api.post(`/personnels`, JSON.stringify(dataObject))
             handleCloseDialog();
             closeModal()
@@ -252,6 +255,7 @@ function Personnel() {
             chaine: response.data.chaine,
             secteur: response.data.secteur,
             lienPhoto: response.data.lienPhoto,
+            po: response.data.po,
         });
         setSelectedPoste({
             value: response.data.poste,
@@ -271,6 +275,7 @@ function Personnel() {
         try {
             const dataObject = change;
             dataObject["salaire"] = parseFloat(formDatas.salaire)
+            dataObject["po"] = parseFloat(formDatas.po)
 
             await api.patch(`/personnels/${selectedPersonnelId}`, JSON.stringify(dataObject))
             handleCloseDialog();
@@ -413,8 +418,7 @@ function Personnel() {
                             onChange={handleChange}
                             labelLabel="Embauche"
                         />
-                        <_TextInput
-                            type="text"
+                        <_IntInput
                             name="salaire"
                             placeholder="Salaire ..."
                             value={formDatas.salaire}
@@ -468,6 +472,13 @@ function Personnel() {
                                 style={{ backgroundColor: 'var(--primary-1)' }}
                             />
                         </div>
+                        <_IntInput
+                            name="po"
+                            placeholder="Poste opératoire ..."
+                            value={formDatas.po}
+                            onChange={handleChange}
+                            labelLabel="Poste opératoire"
+                        />
                     </div>
                     <div className="mt-4 flex justify-end">
                         <_BtnText

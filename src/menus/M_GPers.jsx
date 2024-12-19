@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import _SideBarPers from '../components/SideBar/_SideBarPers';
 import _NavBar from '../components/_NavBar';
 import Personnel from '../pages/gestionPersonnel/personnel/Personnel';
+import Pointage from '../pages/gestionPersonnel/presence/Pointage';
 
 function M_GPers() {
 
@@ -22,6 +23,7 @@ function M_GPers() {
                 <div className='mt-[0vh]'>
                     <Routes>
                         <Route path="liste" element={<Personnel/>} />
+                        <Route path="pointage" element={<Pointage/>} />
                     </Routes>
                 </div>
             </div>

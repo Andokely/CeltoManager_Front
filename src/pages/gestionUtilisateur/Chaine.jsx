@@ -4,7 +4,7 @@ import { _BtnIcon, _BtnText } from "../../components/_Bouton";
 import { FaPlus, FaCheck } from 'react-icons/fa';
 import { MdDelete, MdEdit } from "react-icons/md";
 import Modal from 'react-modal';
-import { _TextInput } from "../../components/_Input";
+import { _TextInput, _IntInput } from "../../components/_Input";
 import _ConfirmationDialog from "../../components/_ConfirmationDialog";
 import { addNotify, errorNotify } from "../../components/Notification/ToastUtil";
 import _Table from "../../components/_Table";
@@ -24,6 +24,7 @@ function Chaine() {
     const [dialogOpen, setDialogOpen] = useState(false);
     const initialFormState = {
         labelChaine: '',
+        nbrsOperateur: ''
     }
     const [formDatas, setFormDatas] = useState(initialFormState);
 
@@ -85,6 +86,8 @@ function Chaine() {
     const handleAddConfirm = async () => {
         try {
             const dataObject = formDatas;
+            dataObject["nbrsOperateur"] = parseFloat(formDatas.nbrsOperateur)
+            
             const response = await api.post(`/Chaines`, JSON.stringify(dataObject))
             handleCloseDialog();
             closeModal()
@@ -125,12 +128,15 @@ function Chaine() {
         const response = await api.get(`/Chaines/${ChaineId}`)
         setFormDatas({
             labelChaine: response.data.labelChaine,
+            nbrsOperateur: response.data.nbrsOperateur,
         })
     }
 
     const handleEditConfirm = async () => {
         try {
             const dataObject = formDatas;
+            dataObject["nbrsOperateur"] = parseFloat(formDatas.nbrsOperateur)
+
             const response = await api.patch(`/Chaines/${selectedChaineId}`, JSON.stringify(dataObject))
             handleCloseDialog();
             closeModal()
@@ -145,15 +151,17 @@ function Chaine() {
 
 
     const columns = [
-        { Header: "Numero", accessor: "numero" },
-        { Header: "Chaine", accessor: "Chaine" },
+        { Header: "Numero", accessor: "numero", className: "text-center" },
+        { Header: "Chaine", accessor: "chaine", className: "text-center" },
+        { Header: "Nombre opérateur", accessor: "nbrsOperateur", className: "text-center" },
         { Header: "Action", accessor: "action", className: "text-center" },
 
     ];
 
     const dataTable = Chaine.map((Chaine, index) => ({
         numero: (<_Cellule valeur={index + 1} />),
-        Chaine: (<_Cellule valeur={Chaine.labelChaine} />),
+        chaine: (<_Cellule valeur={Chaine.labelChaine} />),
+        nbrsOperateur: (<_Cellule valeur={Chaine.nbrsOperateur} />),
         action: (
             <>
                 <div className="flex justify-center space-x-5">
@@ -215,6 +223,13 @@ function Chaine() {
                             value={formDatas.labelChaine}
                             onChange={handleChange}
                             labelLabel="Label Chaine"
+                        />
+                        <_IntInput
+                            name="nbrsOperateur"
+                            placeholder="Nombre opérateur ..."
+                            value={formDatas.nbrsOperateur}
+                            onChange={handleChange}
+                            labelLabel="Nombre opérateur"
                         />
                     </div>
                     <div className="mt-4 flex justify-end">
