@@ -11,6 +11,7 @@ import _Table from "../../components/_Table";
 import { useEffect } from "react";
 import { _Cellule, _CellulePhoto } from "../../components/_Cellule";
 import _UploadImage from "../../components/_UploadImage";
+import api from "../../api";
 Modal.setAppElement('#root');
 
 function Secteur() {

@@ -10,7 +10,7 @@ export const _Cellule = ({ valeur }) => {
 };
 
 _Cellule.propTypes = {
-    valeur: PropTypes.string,
+    valeur: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export const _CellulePhoto = ({ valeur }) => {

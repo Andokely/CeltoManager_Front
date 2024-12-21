@@ -4,6 +4,8 @@ import _SideBarPers from '../components/SideBar/_SideBarPers';
 import _NavBar from '../components/_NavBar';
 import Personnel from '../pages/gestionPersonnel/personnel/Personnel';
 import Pointage from '../pages/gestionPersonnel/presence/Pointage';
+import Presence from '../pages/gestionPersonnel/presence/Presence';
+import Absence from '../pages/gestionPersonnel/absence/Absence';
 
 function M_GPers() {
 
@@ -24,6 +26,8 @@ function M_GPers() {
                     <Routes>
                         <Route path="liste" element={<Personnel/>} />
                         <Route path="pointage" element={<Pointage/>} />
+                        <Route path="presence" element={<Presence/>} />
+                        <Route path="absence" element={<Absence/>} />
                     </Routes>
                 </div>
             </div>

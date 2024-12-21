@@ -49,30 +49,29 @@ function _SideBarPers() {
                                 </div>
                             </NavLink>
                             <NavLink
-                                to="/personnel/pointage"
-                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
-                                <div className='flex space-x-5'>
-                                    <div>
-                                        <BsCalendar4Week className='w-5 h-5' />
-                                    </div>
-                                    <div>
-                                        Pointage
-                                    </div>
-                                </div>
-                            </NavLink>
-                            <NavLink
-                                to="/client"
+                                to="/personnel/presence"
                                 className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
                                         <MdSupervisedUserCircle className='w-6 h-6' />
                                     </div>
                                     <div>
-                                        Client
+                                        Présence
                                     </div>
                                 </div>
                             </NavLink>
-
+                            <NavLink
+                                to="/personnel/absence"
+                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                <div className='flex space-x-5'>
+                                    <div>
+                                        <BsCalendar4Week className='w-5 h-5' />
+                                    </div>
+                                    <div>
+                                        Absence
+                                    </div>
+                                </div>
+                            </NavLink>
                             <NavLink
                                 to="/modele"
                                 className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>

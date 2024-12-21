@@ -2,7 +2,7 @@ function _MainMenu({ label, img }) {
 
     return (
         <>
-            <div class="max-w-[410px] text-center rounded-xl hover:scale-110 duration-700 p-5" style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }}>
+            <div className="max-w-[410px] text-center rounded-xl hover:scale-110 duration-700 p-5" style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }}>
                 <div className="rounded-t-xl" style={{ backgroundColor: 'var(--primary-1)', color: 'var(--text-color)' }}>
                     <img src={img} alt="" className="w-[40%] mx-auto" />
                 </div>

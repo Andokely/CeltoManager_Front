@@ -1,7 +1,7 @@
 import { useState } from "react"
 import _Heure from "./_Heure"
 import PersonnelCard from "./_PersonnelCard"
-import { getCurrentTime, getCurrentDateISO } from "../../../fonction"
+import { getCurrentTime } from "../../../fonction"
 import api from "../../../api"
 import { addNotify, errorNotify } from "../../../components/Notification/ToastUtil"
 
@@ -9,7 +9,6 @@ const Pointage = () => {
     const [personnel, setPersonnel] = useState([])
     const initialFormState = {
         matricule: '',
-        datePresence: '',
         entree: '',
     }
     const [formDatas, setFormDatas] = useState(initialFormState);
@@ -26,7 +25,6 @@ const Pointage = () => {
 
         const updatedFormDatas = {
             ...formDatas,
-            datePresence: getCurrentDateISO(),
             entree: getCurrentTime()
         };
 
