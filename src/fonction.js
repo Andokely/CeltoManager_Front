@@ -35,6 +35,13 @@ export const getCurrentTime = () => {
 export const getCurrentDateISO = () => {
     const now = new Date();
     return now.toISOString();
-  }
-  
+}
+
+export const limiterCaractere = (text, maxLength) => {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength) + '...';
+    }
+    return text;
+}
+
 

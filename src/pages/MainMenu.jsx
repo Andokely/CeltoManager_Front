@@ -27,7 +27,7 @@ function MainMenu() {
                             <Link to="/production" className="flex-1">
                                 <_MainMenu img={'/image/production.png'} label={'Production'} title="Production" />
                             </Link>
-                            <Link to="/production" className="flex-1">
+                            <Link to="/affichage" className="flex-1">
                                 <_MainMenu img={'/image/affichage.png'} label={'Affichage'} title="Affichage" />
                             </Link>
                         </div>
