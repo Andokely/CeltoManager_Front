@@ -21,11 +21,11 @@ const _Heure = () => {
     });
 
     return (
-        <div className="flex flex-col w-[90%] py-5 rounded-[50px] items-center justify-center"
+        <div className="flex flex-col w-[60%] py-5 rounded-lg items-center justify-center"
             style={{ backgroundColor: 'var(--primary-1)', color: 'var(--text-color)' }}>
             <div className="text-center">
-                <p className="text-2xl font-bold">{formattedDate}</p>
-                <p className="text-6xl font-mono mt-4">{formattedTime}</p>
+                <p className="text-xl font-bold">{formattedDate}</p>
+                <p className="text-3xl font-mono mt-2">{formattedTime}</p>
             </div>
         </div>
     );

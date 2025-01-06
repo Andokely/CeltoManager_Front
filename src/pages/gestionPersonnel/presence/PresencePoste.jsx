@@ -2,21 +2,21 @@ import { useEffect, useState } from "react";
 import api from "../../../api";
 import { _Cellule } from "../../../components/_Cellule";
 import _Table from "../../../components/_Table";
-import { VscDebugBreakpointData } from "react-icons/vsc";
+import { VscDebugBreakpointLog } from "react-icons/vsc";
 import _TabGroup from "../../../components/Tab/_TabGroup";
 import { _LoadingComponents } from "../../../components/_Loading";
 
-const AbsenceSecteur = () => {
+const PresencePoste = () => {
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetchAbsence();
+        fetchPresence();
     }, []);
 
-    const fetchAbsence = async () => {
+    const fetchPresence = async () => {
         try {
-            const response = await api.get(`/presences/absentsParSecteur`);
+            const response = await api.get(`/presences/poste`);
             setData(response.data);
         } catch (error) {
             console.error("Error fetching categories:", error);
@@ -27,31 +27,39 @@ const AbsenceSecteur = () => {
 
     const columns = [
         { Header: "Matricule", accessor: "matricule", className: "text-center" },
-        { Header: "Nom", accessor: "nom", className: "text-center" },
+        // { Header: "Nom", accessor: "nom", className: "text-center" },
         { Header: "Prénoms", accessor: "prenoms", className: "text-center" },
         { Header: "Poste", accessor: "poste", className: "text-center" },
-        { Header: "Secteur", accessor: "secteur", className: "text-center" },
+        { Header: "Entree", accessor: "entree", className: "text-center" },
+        { Header: "Entree Dej", accessor: "entreeDej", className: "text-center" },
+        { Header: "Sortie Dej", accessor: "sortieDej", className: "text-center" },
+        { Header: "Sortie", accessor: "sortie", className: "text-center" },
+        { Header: "Retard", accessor: "retard", className: "text-center" },
     ];
 
-    const tabs = data.absentsBySector
-        ? Object.keys(data.absentsBySector).map((secteur) => {
-            const rows = data.absentsBySector[secteur].map((absence) => ({
-                matricule: <_Cellule valeur={absence.matricule || "-"} />,
-                nom: <_Cellule valeur={absence.nom || "-"} />,
-                prenoms: <_Cellule valeur={absence.prenoms || "-"} />,
-                poste: <_Cellule valeur={absence.poste || "-"} />,
-                secteur: <_Cellule valeur={absence.secteur || "-"} />,
+    const tabs = data.presencesByPoste
+        ? Object.keys(data.presencesByPoste).map((poste) => {
+            const rows = data.presencesByPoste[poste].map((presence) => ({
+                matricule: <_Cellule valeur={presence.personnel?.matricule || "-"} />,
+                // nom: <_Cellule valeur={presence.personnel?.nom || "-"} />,
+                prenoms: <_Cellule valeur={presence.personnel?.prenoms || "-"} />,
+                poste: <_Cellule valeur={presence.personnel?.poste || "-"} />,
+                entree: <_Cellule valeur={presence.entree || "-"} />,
+                entreeDej: <_Cellule valeur={presence.entreeDej || "-"} />,
+                sortieDej: <_Cellule valeur={presence.sortieDej || "-"} />,
+                sortie: <_Cellule valeur={presence.sortie || "-"} />,
+                retard: <_Cellule valeur={presence.retard || "-"} />,
             }));
 
             return {
-                label: secteur,
-                icon: <VscDebugBreakpointData className="w-5 h-5" />,
-                title: `${secteur}`,
+                label: poste,
+                icon: <VscDebugBreakpointLog className="w-5 h-5" />,
+                title: `${poste}`,
                 content: (
                     <div className="transition-all duration-700 ease-in-out px-5 transform">
                         <_Table
                             entriesPerPage={{ defaultValue: 50, entries: [10, 25, 50, 100] }}
-                            title={`Liste des personnels présent - ${secteur}`}
+                            title={`Liste des personnels présent - ${poste}`}
                             canSearch={true}
                             table={{ columns, rows }}
                             pagination={true}
@@ -78,4 +86,4 @@ const AbsenceSecteur = () => {
     );
 };
 
-export default AbsenceSecteur;
+export default PresencePoste;

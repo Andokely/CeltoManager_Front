@@ -6,7 +6,7 @@ function _TabGroup({ tabs }) {
 
   return (
     <div className="md:flex p-4">
-      <ul className="flex-column space-y-4 text-sm font-medium md:me-4 mb-4 md:mb-0" style={{ color: 'var(--text-color)' }}>
+      <ul className="flex-column space-y-2 text-sm font-medium md:me-4 mb-4 md:mb-0" style={{ color: 'var(--text-color)' }}>
         {tabs.map((tab, index) => (
           <li key={index}>
             <_TabItem

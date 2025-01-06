@@ -34,7 +34,7 @@ const PresencePiquage = () => {
         label: `${item.labelChaine.split(" ")[1]}`,
         icon: <BiSolidSquareRounded className="w-4 h-4" />,
         title: item.labelChaine,
-        content: <Piquage labelSecteur={"Piquage"} chaine={item.labelChaine} />
+        content: <Piquage labelSecteur={"MACHINISTE"} chaine={`${item.labelChaine.split(" ")[1]}`} />
     }));
 
     return (

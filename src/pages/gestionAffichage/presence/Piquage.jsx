@@ -6,21 +6,20 @@ import _Tabs from "../../../components/Tab/_Tabs";
 import _PersonnelCard from "./_PersonnelCard";
 import { _LoadingComponents } from "../../../components/_Loading";
 
-const Piquage = ({ labelSecteur, chaine }) => {
+const Piquage = ({ labelPoste, chaine }) => {
     const navigate = useNavigate();
     const [personnel, setPersonnel] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchPersonnelSecteur();
-    }, [labelSecteur, chaine]); // Déclenche fetch lorsque labelSecteur ou chaine change
+        fetchPersonnelPoste();
+    }, [labelPoste, chaine]); // Déclenche fetch lorsque labelPoste ou chaine change
 
-    const fetchPersonnelSecteur = async () => {
+    const fetchPersonnelPoste = async () => {
         try {
-            const dataObject = { secteur: labelSecteur };
-            const response = await api.post(`personnels/secteur`, JSON.stringify(dataObject));
+            const dataObject = { poste: labelPoste };
+            const response = await api.post(`personnels/poste`, JSON.stringify(dataObject));
             setPersonnel(response.data.personnels);
-            console.log(response.data.personnels);
         } catch (error) {
             console.error("Error fetching personnel:", error);
         } finally {

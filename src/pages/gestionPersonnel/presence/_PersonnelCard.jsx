@@ -11,33 +11,44 @@ const PersonnelCard = ({
 }) => {
     return (
         <div className="w-full h-full shadow-lg rounded-[50px] overflow-hidden flex flex-col" style={{ backgroundColor: 'var(--primary-1)', color: 'var(--text-color)' }}>
-            <div className="text-center py-4" style={{ backgroundColor: 'var(--primary-4)' }}>
-                <h1 className="text-lg font-bold uppercase">{poste}</h1>
+            <div className="text-center py-3" style={{ backgroundColor: 'var(--primary-4)' }}>
+                <h1 className="text-3xl font-bold uppercase">{matricule}</h1>
             </div>
-            <div className="flex flex-col items-center mt-6" style={{ color: 'var(--text-color)' }}>
-                <img
-                    src={photo}
-                    alt="Profil"
-                    className="w-36 h-36 rounded-full border-4 border-white shadow-md"
-                />
-                <h2 className="text-xl font-semibold mt-4">
-                    {prenom} {nom}
-                </h2>
-                <p className="">
-                    <span className="font-bold">Secteur :</span> {secteur}
-                </p>
-                <p className="">
-                    <span className="font-bold">Poste :</span> {poste}
-                </p>
-                <p className="">
-                    <span className="font-bold">Chaine :</span> {chaine}
-                </p>
-            </div>
+            <div className="grid grid-cols-3 flex items-center justify-center px-4 py-5">
+                <div className="flex items-center">
+                    <img
+                        src={photo}
+                        alt="Profil"
+                        className="w-36 h-36 rounded-full border-4 border-white shadow-md"
+                    />
+                </div>
 
-            <div className="flex mt-5 justify-center">
-                <p className="" style={{ color: 'var(--text-color)' }}>
-                    <span className="font-bold text-5xl">{matricule}</span>
-                </p>
+                <div
+                    className="col-span-2 flex flex-col px-4 items-center justify-center"
+                    style={{ color: 'var(--text-color)', height: '100%' }}
+                >
+                    <h2 className="text-2xl font-semibold mt-4 text-center">
+                        {prenom} {nom}
+                    </h2>
+                    <hr className="my-2 w-[80%]" style={{ backgroundColor: 'var(--border-color)' }} />
+                    <p className="text-center">
+                        <span className="font-bold">Secteur :</span>
+                        <span className="ml-2">{secteur}</span>
+                    </p>
+                    <p className="text-center">
+                        <span className="font-bold">Poste :</span>
+                        <span className="ml-2">{poste}</span>
+                    </p>
+                    {
+                        chaine === "--" ? ("") : (
+                            <p className="text-center">
+                                <span className="font-bold">Chaine :</span>
+                                <span className="ml-2">{chaine}</span>
+                            </p>
+                        )
+                    }
+                </div>
+
             </div>
         </div>
     );

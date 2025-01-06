@@ -4,13 +4,13 @@ import { MdEventBusy } from "react-icons/md";
 import _TabGroup from "../../../components/Tab/_TabGroup";
 import _Tabs from "../../../components/Tab/_Tabs";
 import AbsenceJour from "./AbsenceJour";
-import AbsenceSecteur from "./AbsenceSecteur";
+import AbsencePoste from "./AbsencePoste";
 import { FaUserSlash } from "react-icons/fa";
 
 const Absence = () => {
     const tabs = [
         { id: "absenceJour", label: "Absence par jour", content: <AbsenceJour />, icon: MdEventBusy },
-        { id: "absenceSecteur", label: "Absence par secteur", content: <AbsenceSecteur />, icon: FaUserSlash },
+        { id: "absencePoste", label: "Absence par poste", content: <AbsencePoste />, icon: FaUserSlash },
     ];
 
     return (

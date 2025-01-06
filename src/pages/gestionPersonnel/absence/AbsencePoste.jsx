@@ -2,22 +2,24 @@ import { useEffect, useState } from "react";
 import api from "../../../api";
 import { _Cellule } from "../../../components/_Cellule";
 import _Table from "../../../components/_Table";
-import { VscDebugBreakpointLog } from "react-icons/vsc";
+import { VscDebugBreakpointData } from "react-icons/vsc";
 import _TabGroup from "../../../components/Tab/_TabGroup";
 import { _LoadingComponents } from "../../../components/_Loading";
 
-const PresenceSecteur = () => {
+const AbsencePoste = () => {
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetchPresence();
+        fetchAbsence();
     }, []);
 
-    const fetchPresence = async () => {
+    const fetchAbsence = async () => {
         try {
-            const response = await api.get(`/presences/secteur`);
+            const response = await api.get(`/presences/absentsParPoste`);
             setData(response.data);
+            console.log(response.data.absentsByPoste);
+            
         } catch (error) {
             console.error("Error fetching categories:", error);
         } finally {
@@ -30,36 +32,28 @@ const PresenceSecteur = () => {
         { Header: "Nom", accessor: "nom", className: "text-center" },
         { Header: "Prénoms", accessor: "prenoms", className: "text-center" },
         { Header: "Poste", accessor: "poste", className: "text-center" },
-        { Header: "Entree", accessor: "entree", className: "text-center" },
-        { Header: "Entree Dej", accessor: "entreeDej", className: "text-center" },
-        { Header: "Sortie Dej", accessor: "sortieDej", className: "text-center" },
-        { Header: "Sortie", accessor: "sortie", className: "text-center" },
-        { Header: "Retard", accessor: "retard", className: "text-center" },
+        { Header: "Secteur", accessor: "secteur", className: "text-center" },
     ];
 
-    const tabs = data.presencesBySecteur
-        ? Object.keys(data.presencesBySecteur).map((secteur) => {
-            const rows = data.presencesBySecteur[secteur].map((presence) => ({
-                matricule: <_Cellule valeur={presence.personnel?.matricule || "-"} />,
-                nom: <_Cellule valeur={presence.personnel?.nom || "-"} />,
-                prenoms: <_Cellule valeur={presence.personnel?.prenoms || "-"} />,
-                poste: <_Cellule valeur={presence.personnel?.poste || "-"} />,
-                entree: <_Cellule valeur={presence.entree || "-"} />,
-                entreeDej: <_Cellule valeur={presence.entreeDej || "-"} />,
-                sortieDej: <_Cellule valeur={presence.sortieDej || "-"} />,
-                sortie: <_Cellule valeur={presence.sortie || "-"} />,
-                retard: <_Cellule valeur={presence.retard || "-"} />,
+    const tabs = data.absentsByPoste
+        ? Object.keys(data.absentsByPoste).map((poste) => {
+            const rows = data.absentsByPoste[poste].map((absence) => ({
+                matricule: <_Cellule valeur={absence.matricule || "-"} />,
+                nom: <_Cellule valeur={absence.nom || "-"} />,
+                prenoms: <_Cellule valeur={absence.prenoms || "-"} />,
+                poste: <_Cellule valeur={absence.poste || "-"} />,
+                secteur: <_Cellule valeur={absence.secteur || "-"} />,
             }));
 
             return {
-                label: secteur,
-                icon: <VscDebugBreakpointLog className="w-5 h-5" />,
-                title: `${secteur}`,
+                label: poste,
+                icon: <VscDebugBreakpointData className="w-5 h-5" />,
+                title: `${poste}`,
                 content: (
                     <div className="transition-all duration-700 ease-in-out px-5 transform">
                         <_Table
                             entriesPerPage={{ defaultValue: 50, entries: [10, 25, 50, 100] }}
-                            title={`Liste des personnels présent - ${secteur}`}
+                            title={`Liste des personnels présent - ${poste}`}
                             canSearch={true}
                             table={{ columns, rows }}
                             pagination={true}
@@ -86,4 +80,4 @@ const PresenceSecteur = () => {
     );
 };
 
-export default PresenceSecteur;
+export default AbsencePoste;

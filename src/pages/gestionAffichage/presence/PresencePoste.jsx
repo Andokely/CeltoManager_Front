@@ -5,19 +5,19 @@ import api from "../../../api";
 import _Tabs from "../../../components/Tab/_Tabs";
 import _PersonnelCard from "./_PersonnelCard";
 
-const PresenceSecteur = ({ labelSecteur }) => {
+const PresencePoste = ({ labelPoste }) => {
     const navigate = useNavigate();
     const [personnel, setPersonnel] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchPersonnelSecteur();
-    }, [labelSecteur]);
+        fetchPersonnelPoste();
+    }, [labelPoste]);
 
-    const fetchPersonnelSecteur = async () => {
+    const fetchPersonnelPoste = async () => {
         try {
-            const dataObject = { secteur: labelSecteur }
-            const response = await api.post(`personnels/secteur`, JSON.stringify(dataObject));
+            const dataObject = { poste: labelPoste }
+            const response = await api.post(`personnels/poste`, JSON.stringify(dataObject));
             setPersonnel(response.data);
         } catch (error) {
             console.error("Error fetching personnel:", error);
@@ -62,4 +62,4 @@ const PresenceSecteur = ({ labelSecteur }) => {
     );
 };
 
-export default PresenceSecteur;
+export default PresencePoste;

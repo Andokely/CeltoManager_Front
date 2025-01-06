@@ -5,24 +5,24 @@ import { useNavigate } from "react-router-dom";
 import api from "../../../api";
 import _Tabs from "../../../components/Tab/_Tabs";
 import { VscDebugBreakpointData } from "react-icons/vsc";
-import PresenceSecteur from "./PresenceSecteur";
+import PresencePoste from "./PresencePoste";
 import { _LoadingFull } from "../../../components/_Loading";
 import PresencePiquage from "./PresencePiquage";
 
 
 const Presence = () => {
     const navigate = useNavigate();
-    const [secteur, setSecteur] = useState([]);
+    const [poste, setPoste] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchSecteur();
+        fetchPoste();
     }, []);
 
-    const fetchSecteur = async () => {
+    const fetchPoste = async () => {
         try {
-            const response = await api.get(`/secteurs`);
-            setSecteur(response.data);
+            const response = await api.get(`/postes`);
+            setPoste(response.data);
         } catch (error) {
             console.error("Error fetching categories:", error);
         } finally {
@@ -30,13 +30,13 @@ const Presence = () => {
         }
     };
 
-    const tabs = secteur.map((item) => ({
-        id: `secteur-${item.id}`,
-        label: item.labelSecteur,
+    const tabs = poste.map((item) => ({
+        id: `poste-${item.id}`,
+        label: item.labelPoste,
         icon: VscDebugBreakpointData,
-        content: item.labelSecteur === "Piquage"
+        content: item.labelPoste === "MACHINISTE"
             ? <PresencePiquage/>
-            : <PresenceSecteur labelSecteur={item.labelSecteur} />
+            : <PresencePoste labelPoste={item.labelPoste} />
     }));
 
     return (

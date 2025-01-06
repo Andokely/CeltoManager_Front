@@ -15,7 +15,6 @@ const _PersonnelCard = ({ id, matricule, nom, prenoms, lienPhoto, po }) => {
         try {
             const response = await api.get(`/presences`);
             setPrsences(response.data.presences);
-            console.log(response.data.presences);
         } catch (error) {
             console.error('Error fetching categories:', error);
         } finally {

@@ -127,7 +127,7 @@ const _Table = ({ title, entriesPerPage, table, pagination, searchQuery, loading
                                             <td
                                                 {...cell.getCellProps()}
                                                 key={`${index}-${cell.column.id}`}
-                                                className={`border-t ${cell.column.className}`}
+                                                className={`border-t text-sm ${cell.column.className}`}
                                                 style={{
                                                     color: 'var(--text-color)',
                                                     borderColor: 'var(--border-color)',

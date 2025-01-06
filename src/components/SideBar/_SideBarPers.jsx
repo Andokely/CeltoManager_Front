@@ -73,14 +73,14 @@ function _SideBarPers() {
                                 </div>
                             </NavLink>
                             <NavLink
-                                to="/modele"
+                                to="/personnel/excelImporter"
                                 className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
                                         <MdOutlineArchitecture className='w-6 h-6' />
                                     </div>
                                     <div>
-                                        Modèle
+                                        Importation excel
                                     </div>
                                 </div>
                             </NavLink>
