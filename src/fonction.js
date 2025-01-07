@@ -44,20 +44,6 @@ export const limiterCaractere = (text, maxLength) => {
     return text;
 }
 
-// export const lireTexte = (texte) => {
-//     if (texte.trim() === "") {
-//         alert("Veuillez entrer du texte à lire !");
-//         return;
-//     }
-//     const utterance = new SpeechSynthesisUtterance(texte);
-//     utterance.lang = "fr-FR"; // Langue française
-//     utterance.pitch = 1;      // Tonalité normale
-//     utterance.rate = 1.1;       // Vitesse normale
-//     utterance.volume = 1;     // Volume maximal
-//     speechSynthesis.speak(utterance);
-// };
-
-// Fonction principale pour lire du texte
 export const lireTexte = (texte, rate = 1, pitch = 1, volume = 1, voice = null) => {
     if (texte.trim() === "") {
         alert("Veuillez entrer du texte à lire !");
@@ -84,34 +70,27 @@ export const lireTexte = (texte, rate = 1, pitch = 1, volume = 1, voice = null) 
     speechSynthesis.speak(utterance);
 };
 
-// Fonction pour traiter les matricules
 const traiterMatricule = (texte) => {
     return texte.replace(/\b([A-Za-z])(\d+)\b/g, (match, lettre, chiffres) => {
-        // Enlever les zéros inutiles au début et garder le reste
-        let chiffreFormate = chiffres.replace(/^0+/, ''); // Enlever les zéros de début
+        let chiffreFormate = chiffres.replace(/^0+/, '');
 
-        // Si le nombre reste vide (par exemple 0000 -> ""), on remplace par "zéro"
         if (chiffreFormate === "") chiffreFormate = "0";
 
-        // Si le nombre a plus de 2 chiffres, les diviser en groupes de 2
         let groupesDeDeux = [];
         for (let i = 0; i < chiffreFormate.length; i += 2) {
             groupesDeDeux.push(chiffreFormate.slice(i, i + 2));
         }
 
-        // Si le nombre a moins de 3 chiffres, ne pas diviser
         if (chiffreFormate.length < 3) {
             groupesDeDeux = [chiffreFormate];
         }
 
-        // Convertir chaque groupe en mots
         const nombreEnMots = groupesDeDeux.map(groupe => convertirChiffresEnMots(groupe)).join(" ");
 
         return `${lettre} ${nombreEnMots}`;
     });
 };
 
-// Fonction pour convertir un nombre en mots
 const convertirChiffresEnMots = (nombre) => {
     const chiffresEnMots = {
         "0": "zéro",
@@ -144,27 +123,34 @@ const convertirChiffresEnMots = (nombre) => {
         "90": "quatre-vingt-dix"
     };
 
-    // Si le nombre est inférieur ou égal à 20, il est directement trouvé dans la map
     if (nombre <= 20) {
         return chiffresEnMots[nombre] || nombre;
     }
 
-    // Si le nombre est plus grand, c'est une dizaine, on ajoute les unités
     let mots = [];
 
-    // Les dizaines
     let dizaines = Math.floor(nombre / 10) * 10;
     if (dizaines > 0) {
         mots.push(chiffresEnMots[dizaines]);
     }
 
-    // Les unités
     let unites = nombre % 10;
     if (unites > 0) {
         mots.push(chiffresEnMots[unites]);
     }
 
     return mots.join("-");
+};
+
+export const formatMinuteEnHeure = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+
+    if (hours > 0) {
+        return `${hours}h ${remainingMinutes}m`;
+    } else {
+        return `${remainingMinutes}m`;
+    }
 };
 
 

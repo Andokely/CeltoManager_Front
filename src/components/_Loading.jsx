@@ -24,3 +24,21 @@ export const _LoadingFull = () => {
     )
 
 }
+
+export const _LoadingGestionGif = ({ image }) => {
+    return (
+        <div className="fixed inset-0 bg-black flex justify-center items-center z-50">
+            <img src={image} alt="" className="w-[15%] mx-auto" />
+        </div >
+    )
+
+}
+
+export const _LoadingLogin = ({ image }) => {
+    return (
+        <div className="fixed inset-0 bg-black flex justify-center items-center z-50">
+            <img src={image} alt="" className="rounded-full w-[20%] mx-auto" />
+        </div >
+    )
+
+}

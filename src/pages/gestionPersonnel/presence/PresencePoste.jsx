@@ -5,6 +5,7 @@ import _Table from "../../../components/_Table";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
 import _TabGroup from "../../../components/Tab/_TabGroup";
 import { _LoadingComponents } from "../../../components/_Loading";
+import { formatMinuteEnHeure } from "../../../fonction";
 
 const PresencePoste = () => {
     const [data, setData] = useState({});
@@ -48,7 +49,9 @@ const PresencePoste = () => {
                 entreeDej: <_Cellule valeur={presence.entreeDej || "-"} />,
                 sortieDej: <_Cellule valeur={presence.sortieDej || "-"} />,
                 sortie: <_Cellule valeur={presence.sortie || "-"} />,
-                retard: <_Cellule valeur={presence.retard || "-"} />,
+                retard: (<_Cellule
+                    valeur={presence.retard !== null && presence.retard !== undefined ? formatMinuteEnHeure(presence.retard) : "-"}
+                />),
             }));
 
             return {

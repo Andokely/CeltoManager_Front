@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../../../api";
 import { _Cellule } from "../../../components/_Cellule";
 import _Table from "../../../components/_Table";
+import { formatMinuteEnHeure } from "../../../fonction";
 
 const PresenceJour = () => {
     const [presences, setPrsences] = useState([]);
@@ -45,7 +46,9 @@ const PresenceJour = () => {
         entreeDej: (<_Cellule valeur={presence.entreeDej || "-"} />),
         sortieDej: (<_Cellule valeur={presence.sortieDej || "-"} />),
         sortie: (<_Cellule valeur={presence.sortie || "-"} />),
-        retard: (<_Cellule valeur={presence.retard || "-"} />),
+        retard: (<_Cellule
+            valeur={presence.retard !== null && presence.retard !== undefined ? formatMinuteEnHeure(presence.retard) : "-"}
+        />),
     }));
 
     return (

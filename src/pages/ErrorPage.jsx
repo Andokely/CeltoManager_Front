@@ -2,8 +2,9 @@ function ErrorPage() {
 
     return (
         <>
-            <div className="flex flex-col items-center justify-center h-screen"
-                style={{ backgroundColor: 'var(--primary-1)' }}>
+            <div className="flex flex-col bg-black items-center justify-center h-screen"
+                style={{ backgroundColor: 'var(--primary-1)' }}
+            >
 
                 <div className="shadow-lg rounded-lg p-8 max-w-md text-center"
                     style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }}>

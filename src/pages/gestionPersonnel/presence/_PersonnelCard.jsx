@@ -10,7 +10,7 @@ const PersonnelCard = ({
     secteur
 }) => {
     return (
-        <div className="w-full h-full shadow-lg rounded-[50px] overflow-hidden flex flex-col" style={{ backgroundColor: 'var(--primary-1)', color: 'var(--text-color)' }}>
+        <div className="w-full h-full rounded-[50px] overflow-hidden flex flex-col" style={{ backgroundColor: 'var(--primary-1)', color: 'var(--text-color)' }}>
             <div className="text-center py-3" style={{ backgroundColor: 'var(--primary-4)' }}>
                 <h1 className="text-3xl font-bold uppercase">{matricule}</h1>
             </div>

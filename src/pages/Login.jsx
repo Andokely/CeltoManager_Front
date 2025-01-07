@@ -2,10 +2,11 @@ import { useContext, useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
 import { errorNotify } from '../components/Notification/ToastUtil';
 import _Carousel from '../components/_carousel';
-import {_LoadingFull} from '../components/_Loading';
+import { _LoadingFull } from '../components/_Loading';
 import config from '../../config.json'
 import axios from 'axios';
 import { AuthContext } from '../AuthContext';
+import { _LoadingLogin } from '../components/_Loading';
 
 function Login() {
     const { login } = useContext(AuthContext)
@@ -34,8 +35,8 @@ function Login() {
         });
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (e = null) => {
+        if (e) e.preventDefault();
 
         try {
             const dataObject = formDatas;
@@ -50,7 +51,7 @@ function Login() {
                 navigate('/');
                 login(response.data.token)
                 setIsLoading(false);
-            }, 2000);
+            }, 3000);
 
 
         } catch (error) {
@@ -61,6 +62,12 @@ function Login() {
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            handleSubmit();
+        }
     };
     return (
         <>
@@ -95,6 +102,7 @@ function Login() {
                                             type={showPassword ? 'text' : 'password'}
                                             value={formDatas.motDePasse}
                                             onChange={handleChange}
+                                            onKeyDown={handleKeyPress}
                                             placeholder='Mot de passe...'
                                             className='border-2 border-gray-300 rounded-lg px-4 py-2 bg-transparent focus:shadow-blue-900 focus:ring-0 focus:outline-none h-10 pr-10 shadow-sm w-full'
                                         />
@@ -133,7 +141,8 @@ function Login() {
                 </div>
             </div>
             {isLoading && (
-                <_LoadingFull />
+                <_LoadingLogin image={"/gif/celtoManager3.gif"} />
+                // <_LoadingFull />
             )}
         </>
     );

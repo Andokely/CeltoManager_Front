@@ -23,7 +23,7 @@ function _SideBarPers() {
 
     return (
         <div className='p-1'>
-            <div className='fixed bg-slate-800 h-[calc(100vh-10px)] animate-slideInLeft overflow-y-scroll w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 px-1 py-1 flex flex-col justify-between scrollbar-thin'>
+            <div className='fixed bg-slate-800 h-[calc(100vh-7px)] animate-slideInLeft overflow-y-scroll w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 px-1 py-1 flex flex-col justify-between scrollbar-thin'>
                 <div className=''>
                     <div className='bg-slate-800 h-[9vh]  shadow-slate-700 shadow-2xl  flex place-items-center'>
                         <div className='justify-start px-3 py-1 flex h-26'>

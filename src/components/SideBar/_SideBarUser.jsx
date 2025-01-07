@@ -1,7 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import React, { useState } from 'react';
-import { MdScreenshotMonitor, MdCategory, MdDashboard, MdSupervisedUserCircle, MdOutlineArchitecture, MdProductionQuantityLimits, MdOutlineGroupWork, MdSensors } from "react-icons/md";
-
+import { MdSupervisedUserCircle} from "react-icons/md";
+import { FaCircleUser } from "react-icons/fa6";
+import { RiUserStarFill, RiUserReceivedFill, RiMapPinUserFill } from "react-icons/ri";
+import { TbCirclesRelation } from "react-icons/tb";
 
 function _SideBarUser() {
     const [openMenuIndexes, setOpenMenuIndexes] = useState([]);
@@ -34,11 +36,23 @@ function _SideBarUser() {
                     <div className="px-1 py-1 mt-2">
                         <div className='rounded-lg py-2 shadow-slate-700 shadow-2xl'>
                             <NavLink
+                                to="/utilisateur/utilisateur"
+                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                <div className='flex space-x-5'>
+                                    <div>
+                                        <MdSupervisedUserCircle className='w-5 h-5' />
+                                    </div>
+                                    <div>
+                                        Utilisateur
+                                    </div>
+                                </div>
+                            </NavLink>
+                            <NavLink
                                 to="/utilisateur/role"
                                 className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
-                                        <MdDashboard className='w-5 h-5' />
+                                        <RiUserStarFill className='w-5 h-5' />
                                     </div>
                                     <div>
                                         Rôle
@@ -50,7 +64,7 @@ function _SideBarUser() {
                                 className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
-                                        <MdDashboard className='w-5 h-5' />
+                                        <RiUserReceivedFill className='w-5 h-5' />
                                     </div>
                                     <div>
                                         Poste
@@ -62,7 +76,7 @@ function _SideBarUser() {
                                 className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
-                                        <MdDashboard className='w-5 h-5' />
+                                        <TbCirclesRelation className='w-5 h-5' />
                                     </div>
                                     <div>
                                         Chaine
@@ -74,22 +88,10 @@ function _SideBarUser() {
                                 className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
-                                        <MdDashboard className='w-5 h-5' />
+                                        <RiMapPinUserFill className='w-5 h-5' />
                                     </div>
                                     <div>
                                         Secteur
-                                    </div>
-                                </div>
-                            </NavLink>
-                            <NavLink
-                                to="/utilisateur/utilisateur"
-                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
-                                <div className='flex space-x-5'>
-                                    <div>
-                                        <MdDashboard className='w-5 h-5' />
-                                    </div>
-                                    <div>
-                                        Utilisateur
                                     </div>
                                 </div>
                             </NavLink>
@@ -98,7 +100,7 @@ function _SideBarUser() {
                                 className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
                                     <div>
-                                        <MdDashboard className='w-5 h-5' />
+                                        <FaCircleUser className='w-5 h-5' />
                                     </div>
                                     <div>
                                         Profil
