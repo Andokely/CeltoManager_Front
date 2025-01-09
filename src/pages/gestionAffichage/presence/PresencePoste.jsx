@@ -9,6 +9,8 @@ const PresencePoste = ({ labelPoste }) => {
     const navigate = useNavigate();
     const [personnel, setPersonnel] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [presence, setPresence] = useState([])
+
 
     useEffect(() => {
         fetchPersonnelPoste();
@@ -26,6 +28,20 @@ const PresencePoste = ({ labelPoste }) => {
         }
     };
 
+    useEffect(() => {
+        fetchPresence();
+    }, []);
+
+    const fetchPresence = async () => {
+        try {
+            const response = await api.get(`/presences`);
+            setPresence(response.data.presences);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
     return (
         <>
             <div className="p-3 flex gap-8 rounded-lg" style={{ backgroundColor: 'var(--primary-5)' }}>
@@ -49,6 +65,7 @@ const PresencePoste = ({ labelPoste }) => {
                             prenoms={personnel.prenoms}
                             lienPhoto={personnel.lienPhoto}
                             po={personnel.po}
+                            presences={presence}
                         />
                     ))
                 ) : (

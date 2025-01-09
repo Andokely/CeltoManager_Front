@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../../api";
-import { _Cellule } from "../../../components/_Cellule";
+import { _Cellule, _CellulePhoto } from "../../../components/_Cellule";
 import _Table from "../../../components/_Table";
 import { VscDebugBreakpointData } from "react-icons/vsc";
 import _TabGroup from "../../../components/Tab/_TabGroup";
@@ -18,8 +18,6 @@ const AbsencePoste = () => {
         try {
             const response = await api.get(`/presences/absentsParPoste`);
             setData(response.data);
-            console.log(response.data.absentsByPoste);
-            
         } catch (error) {
             console.error("Error fetching categories:", error);
         } finally {
@@ -28,20 +26,22 @@ const AbsencePoste = () => {
     };
 
     const columns = [
+        { Header: "Photo", accessor: "photo" },
         { Header: "Matricule", accessor: "matricule", className: "text-center" },
         { Header: "Nom", accessor: "nom", className: "text-center" },
         { Header: "Prénoms", accessor: "prenoms", className: "text-center" },
-        { Header: "Poste", accessor: "poste", className: "text-center" },
+        // { Header: "Poste", accessor: "poste", className: "text-center" },
         { Header: "Secteur", accessor: "secteur", className: "text-center" },
     ];
 
     const tabs = data.absentsByPoste
         ? Object.keys(data.absentsByPoste).map((poste) => {
             const rows = data.absentsByPoste[poste].map((absence) => ({
+                photo: (<_CellulePhoto valeur={absence.lienPhoto} />),
                 matricule: <_Cellule valeur={absence.matricule || "-"} />,
                 nom: <_Cellule valeur={absence.nom || "-"} />,
                 prenoms: <_Cellule valeur={absence.prenoms || "-"} />,
-                poste: <_Cellule valeur={absence.poste || "-"} />,
+                // poste: <_Cellule valeur={absence.poste || "-"} />,
                 secteur: <_Cellule valeur={absence.secteur || "-"} />,
             }));
 

@@ -141,7 +141,7 @@ function Login() {
                 </div>
             </div>
             {isLoading && (
-                <_LoadingLogin image={"/gif/celtoManager3.gif"} />
+                <_LoadingLogin image={"/gif/test.gif"} />
                 // <_LoadingFull />
             )}
         </>

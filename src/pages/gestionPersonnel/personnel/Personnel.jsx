@@ -59,9 +59,6 @@ function Personnel() {
 
     useEffect(() => {
         fetchPersonnels()
-        fetchPoste()
-        fetchChaine()
-        fetchSecteur()
     }, [])
 
     const fetchPersonnels = async () => {
@@ -108,7 +105,12 @@ function Personnel() {
         }
     };
 
-    const openModal = () => setModalIsOpen(true);
+    const openModal = () => {
+        setModalIsOpen(true)
+        fetchPoste()
+        fetchChaine()
+        fetchSecteur()
+    };
     const closeModal = () => {
         setModalIsOpen(false);
         setFormDatas(initialFormState);
@@ -290,33 +292,35 @@ function Personnel() {
     }
 
     const columns = [
+        { Header: "Photo", accessor: "photo" },
         { Header: "Matricule", accessor: "matricule" },
         { Header: "Nom", accessor: "nom" },
         { Header: "Prénoms", accessor: "prenoms", className: "text-center" },
         { Header: "Adresse", accessor: "adresse", className: "text-center" },
         { Header: "Télephone", accessor: "telephone", className: "text-center" },
-        { Header: "Embauche", accessor: "embauche", className: "text-center" },
-        { Header: "Salaire", accessor: "salaire", className: "text-center" },
-        { Header: "Catégorie", accessor: "categorie", className: "text-center" },
+        // { Header: "Embauche", accessor: "embauche", className: "text-center" },
+        // { Header: "Salaire", accessor: "salaire", className: "text-center" },
+        // { Header: "Catégorie", accessor: "categorie", className: "text-center" },
         { Header: "Poste", accessor: "poste", className: "text-center" },
-        { Header: "Chaine", accessor: "chaine", className: "text-center" },
-        { Header: "Secteur", accessor: "secteur", className: "text-center" },
+        // { Header: "Chaine", accessor: "chaine", className: "text-center" },
+        // { Header: "Secteur", accessor: "secteur", className: "text-center" },
         { Header: "Action", accessor: "action", className: "text-center" },
 
     ];
 
     const dataTable = personnels.map((personnel) => ({
+        photo: (<_CellulePhoto valeur={personnel.lienPhoto} />),
         matricule: (<_Cellule valeur={personnel.matricule} />),
         nom: (<_Cellule valeur={personnel.nom} />),
         prenoms: (<_Cellule valeur={personnel.prenoms} />),
         adresse: (<_Cellule valeur={personnel.adresse} />),
         telephone: (<_Cellule valeur={personnel.telephone} />),
-        embauche: (<_Cellule valeur={convertirDateEnFormatFrancais(personnel.embauche)} />),
-        salaire: (<_Cellule valeur={personnel.salaire} />),
-        categorie: (<_Cellule valeur={personnel.categorie} />),
+        // embauche: (<_Cellule valeur={convertirDateEnFormatFrancais(personnel.embauche)} />),
+        // salaire: (<_Cellule valeur={personnel.salaire} />),
+        // categorie: (<_Cellule valeur={personnel.categorie} />),
         poste: (<_Cellule valeur={personnel.poste} />),
-        chaine: (<_Cellule valeur={personnel.chaine} />),
-        secteur: (<_Cellule valeur={personnel.secteur} />),
+        // chaine: (<_Cellule valeur={personnel.chaine} />),
+        // secteur: (<_Cellule valeur={personnel.secteur} />),
         action: (
             <>
                 <div className="flex justify-center space-x-5">

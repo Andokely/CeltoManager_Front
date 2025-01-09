@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../../api";
-import { _Cellule } from "../../../components/_Cellule";
+import { _Cellule, _CellulePhoto } from "../../../components/_Cellule";
 import _Table from "../../../components/_Table";
 import { VscDebugBreakpointLog } from "react-icons/vsc";
 import _TabGroup from "../../../components/Tab/_TabGroup";
@@ -27,10 +27,11 @@ const PresencePoste = () => {
     };
 
     const columns = [
+        { Header: "Photo", accessor: "photo" },
         { Header: "Matricule", accessor: "matricule", className: "text-center" },
         // { Header: "Nom", accessor: "nom", className: "text-center" },
         { Header: "Prénoms", accessor: "prenoms", className: "text-center" },
-        { Header: "Poste", accessor: "poste", className: "text-center" },
+        // { Header: "Poste", accessor: "poste", className: "text-center" },
         { Header: "Entree", accessor: "entree", className: "text-center" },
         { Header: "Entree Dej", accessor: "entreeDej", className: "text-center" },
         { Header: "Sortie Dej", accessor: "sortieDej", className: "text-center" },
@@ -41,10 +42,11 @@ const PresencePoste = () => {
     const tabs = data.presencesByPoste
         ? Object.keys(data.presencesByPoste).map((poste) => {
             const rows = data.presencesByPoste[poste].map((presence) => ({
+                photo: (<_CellulePhoto valeur={presence.personnel.lienPhoto} />),
                 matricule: <_Cellule valeur={presence.personnel?.matricule || "-"} />,
                 // nom: <_Cellule valeur={presence.personnel?.nom || "-"} />,
                 prenoms: <_Cellule valeur={presence.personnel?.prenoms || "-"} />,
-                poste: <_Cellule valeur={presence.personnel?.poste || "-"} />,
+                // poste: <_Cellule valeur={presence.personnel?.poste || "-"} />,
                 entree: <_Cellule valeur={presence.entree || "-"} />,
                 entreeDej: <_Cellule valeur={presence.entreeDej || "-"} />,
                 sortieDej: <_Cellule valeur={presence.sortieDej || "-"} />,

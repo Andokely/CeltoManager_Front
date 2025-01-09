@@ -1,28 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import api from "../../../api";
 import { limiterCaractere } from "../../../fonction";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
-const _PersonnelCard = ({ id, matricule, nom, prenoms, lienPhoto, po }) => {
+const _PersonnelCard = ({ id, matricule, nom, prenoms, lienPhoto, po, presences }) => {
 
-    const [presences, setPrsences] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        fetchPresence();
-    }, []);
-
-    const fetchPresence = async () => {
-        try {
-            const response = await api.get(`/presences`);
-            setPrsences(response.data.presences);
-        } catch (error) {
-            console.error('Error fetching categories:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const isPresent = presences.some(p => p.personnel.matricule === matricule);
+    const isPresent = useMemo(() => {
+        return presences.some(p => p.personnel.matricule === matricule);
+    }, [presences, matricule]);
 
     return (
         <div className="flex justify-between shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
@@ -31,10 +17,12 @@ const _PersonnelCard = ({ id, matricule, nom, prenoms, lienPhoto, po }) => {
                 color: 'var(--text-color)'
             }}
         >
-            <img
-                className="w-12 h-full object-cover"
+            <LazyLoadImage
+                className="w-20 max-h-16 object-cover"
                 src={`/profil/${lienPhoto ? lienPhoto : "x.jpeg"}`}
-                alt={`${nom} ${prenoms}`}
+                alt="Profil"
+                effect="blur"
+                loading="lazy"
             />
             <div className="py-2 px-3">
                 <h2 className="font-semibold">{`${matricule}`}</h2>

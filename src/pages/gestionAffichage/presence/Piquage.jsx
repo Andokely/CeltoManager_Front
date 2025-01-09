@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { _BtnIcon } from "../../../components/_Bouton";
 import { useNavigate } from "react-router-dom";
 import api from "../../../api";
@@ -9,6 +9,7 @@ import { _LoadingComponents } from "../../../components/_Loading";
 const Piquage = ({ labelPoste, chaine }) => {
     const navigate = useNavigate();
     const [personnel, setPersonnel] = useState([]);
+    const [presence, setPresence] = useState([])
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -27,7 +28,24 @@ const Piquage = ({ labelPoste, chaine }) => {
         }
     };
 
-    const filteredPersonnel = personnel.filter(p => p.chaine === chaine);
+    useEffect(() => {
+        fetchPresence();
+    }, []);
+
+    const fetchPresence = async () => {
+        try {
+            const response = await api.get(`/presences`);
+            setPresence(response.data.presences);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const filteredPersonnel = useMemo(() => {
+        return personnel.filter(p => p.chaine === chaine);
+    }, [personnel, chaine]); 
 
     return (
         <div className="flex grid grid-cols-6 gap-4 mt-3">
@@ -44,6 +62,7 @@ const Piquage = ({ labelPoste, chaine }) => {
                         prenoms={personnel.prenoms}
                         lienPhoto={personnel.lienPhoto}
                         po={personnel.po}
+                        presences={presence}
                     />
                 ))
             ) : (

@@ -1,4 +1,7 @@
 import PropTypes from "prop-types";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 
 export const _Cellule = ({ valeur }) => {
 
@@ -16,8 +19,14 @@ _Cellule.propTypes = {
 export const _CellulePhoto = ({ valeur }) => {
     return (
         <>
-            <div className={"flex flex-col justify-left px-5 py-2 items-left"}>
-                <img className="w-8 h-auto rounded-full" src={`/profil/${valeur ? valeur : 'x.jpeg'}`} alt="" srcset="" />
+            <div className={"flex flex-col justify-center items-center"}>
+                <LazyLoadImage
+                    className="w-8 h-auto rounded-full"
+                    src={`/profil/${valeur ? valeur : "x.jpeg"}`}
+                    alt="Profil"
+                    effect="blur"
+                    loading="lazy"
+                />
             </div>
         </>
     )
@@ -26,6 +35,8 @@ export const _CellulePhoto = ({ valeur }) => {
 _CellulePhoto.propTypes = {
     valeur: PropTypes.string,
 };
+
+
 
 
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../../api";
-import { _Cellule } from "../../../components/_Cellule";
+import { _Cellule, _CellulePhoto } from "../../../components/_Cellule";
 import _Table from "../../../components/_Table";
 import { formatMinuteEnHeure } from "../../../fonction";
 
@@ -26,8 +26,9 @@ const PresenceJour = () => {
     };
 
     const columns = [
+        { Header: "Photo", accessor: "photo" },
         { Header: "Matricule", accessor: "matricule", className: "text-center" },
-        { Header: "Nom", accessor: "nom", className: "text-center" },
+        // { Header: "Nom", accessor: "nom", className: "text-center" },
         { Header: "Prénoms", accessor: "prenoms", className: "text-center" },
         { Header: "Poste", accessor: "poste", className: "text-center" },
         { Header: "Entree", accessor: "entree", className: "text-center" },
@@ -38,8 +39,9 @@ const PresenceJour = () => {
     ];
 
     const dataTable = presences.map((presence, index) => ({
+        photo: (<_CellulePhoto valeur={presence.personnel.lienPhoto} />),
         matricule: (<_Cellule valeur={presence.personnel.matricule || "-"} />),
-        nom: (<_Cellule valeur={presence.personnel.nom || "-"} />),
+        // nom: (<_Cellule valeur={presence.personnel.nom || "-"} />),
         prenoms: (<_Cellule valeur={presence.personnel.prenoms || "-"} />),
         poste: (<_Cellule valeur={presence.personnel.poste || "-"} />),
         entree: (<_Cellule valeur={presence.entree || "-"} />),

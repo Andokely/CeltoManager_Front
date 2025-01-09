@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../../api";
-import { _Cellule } from "../../../components/_Cellule";
+import { _Cellule, _CellulePhoto } from "../../../components/_Cellule";
 import _Table from "../../../components/_Table";
 
 const AbsenceJour = () => {
@@ -23,16 +23,18 @@ const AbsenceJour = () => {
     };
 
     const columns = [
+        { Header: "Photo", accessor: "photo" },
         { Header: "Matricule", accessor: "matricule", className: "text-center" },
-        { Header: "Nom", accessor: "nom", className: "text-center" },
+        // { Header: "Nom", accessor: "nom", className: "text-center" },
         { Header: "Prénoms", accessor: "prenoms", className: "text-center" },
         { Header: "Poste", accessor: "poste", className: "text-center" },
         { Header: "Secteur", accessor: "secteur", className: "text-center" },
     ];
 
     const dataTable = absents.map((absent, index) => ({
+        photo: (<_CellulePhoto valeur={absent.lienPhoto} />),
         matricule: (<_Cellule valeur={absent.matricule || "-"} />),
-        nom: (<_Cellule valeur={absent.nom || "-"} />),
+        // nom: (<_Cellule valeur={absent.nom || "-"} />),
         prenoms: (<_Cellule valeur={absent.prenoms || "-"} />),
         poste: (<_Cellule valeur={absent.poste || "-"} />),
         secteur: (<_Cellule valeur={absent.secteur || "-"} />),
