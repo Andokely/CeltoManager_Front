@@ -5,6 +5,8 @@ import _NavBar from '../components/_NavBar';
 import Presence from '../pages/gestionAffichage/presence/Presence';
 import { _LoadingGestionGif } from '../components/_Loading';
 import Chaine from '../pages/gestionAffichage/chaine/Chaine';
+import ProtectedRoute from '../ProtectedRoute';
+import NotAccess from '../pages/NotAccess';
 
 function M_GAff() {
     const location = useLocation();
@@ -42,8 +44,9 @@ function M_GAff() {
                         <div className='mt-[0vh]'>
                             <Routes>
                                 <Route path="/" element={<Navigate to="chaine" replace />} />
-                                <Route path="a_presence" element={<Presence />} />
+                                <Route path="a_presence" element={<ProtectedRoute requiredRole={["ADMINISTRATEUR", "SURVEILLANT"]}><Presence /></ProtectedRoute>} />
                                 <Route path="chaine" element={<Chaine />} />
+                                <Route path="no" element={<NotAccess />} />
                             </Routes>
                         </div>
                     </div>

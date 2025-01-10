@@ -11,6 +11,7 @@ import ProtectedRoute from './ProtectedRoute';
 import ErrorPage from './pages/ErrorPage';
 import SessionExpired from './pages/SessionExpired';
 import M_GAff from './menus/M_GAff';
+import NotAccess from './pages/NotAccess';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="*" element={<Navigate to="/error" />} />
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/expired" element={<SessionExpired />} />
+        <Route path="/no-access" element={<NotAccess />} />
       </Routes>
     </>
   );

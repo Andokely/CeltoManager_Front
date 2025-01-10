@@ -27,7 +27,7 @@ function _Mode() {
         document.documentElement.classList.toggle('dark-mode', isDarkMode);
         localStorage.setItem('dark-mode', JSON.stringify(isDarkMode));
 
-        const getUserById = async (userId) => {
+        const getUserById = async () => {
             const token = localStorage.getItem('token')
 
             if (token) {

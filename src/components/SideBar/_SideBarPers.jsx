@@ -5,9 +5,11 @@ import { MdScreenshotMonitor, MdCategory, MdDashboard, MdSupervisedUserCircle, M
 import { TbPhotoSensor3 } from "react-icons/tb";
 import { GiScissors } from 'react-icons/gi';
 import { BsCalendar4Week } from "react-icons/bs";
+import { useAuth } from '../../AuthContext';
 
 function _SideBarPers() {
     const [openMenuIndexes, setOpenMenuIndexes] = useState([]);
+    const { user } = useAuth()
 
     const bgColor = "bg-green-600"
 
@@ -20,6 +22,13 @@ function _SideBarPers() {
             }
         });
     };
+
+    const menuItems = [
+        { label: 'Personnel', to: '/personnel/liste', roles: ["SURVEILLANT"], icon: <MdDashboard className='w-5 h-5' /> },
+        { label: 'Présence', to: '/personnel/presence', roles: ["ADMINISTRATEUR"], icon: <MdSupervisedUserCircle className='w-6 h-6' /> },
+        { label: 'Absence', to: '/personnel/absence', roles: ["SURVEILLANT"], icon: <BsCalendar4Week className='w-5 h-5' /> },
+        { label: 'Importation Excel', to: '/personnel/excelImporter', roles: ["SURVEILLANT"], icon: <MdOutlineArchitecture className='w-6 h-6' /> },
+    ];
 
     return (
         <div className='p-1'>
@@ -36,54 +45,38 @@ function _SideBarPers() {
                     <hr className="my-1 border border-slate-700" />
                     <div className="px-1 py-1 mt-2">
                         <div className='rounded-lg py-2 shadow-slate-700 shadow-2xl'>
-                            <NavLink
-                                to="/personnel/liste"
-                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
-                                <div className='flex space-x-5'>
-                                    <div>
-                                        <MdDashboard className='w-5 h-5' />
-                                    </div>
-                                    <div>
-                                        Personnel
-                                    </div>
-                                </div>
-                            </NavLink>
-                            <NavLink
-                                to="/personnel/presence"
-                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
-                                <div className='flex space-x-5'>
-                                    <div>
-                                        <MdSupervisedUserCircle className='w-6 h-6' />
-                                    </div>
-                                    <div>
-                                        Présence
-                                    </div>
-                                </div>
-                            </NavLink>
-                            <NavLink
-                                to="/personnel/absence"
-                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
-                                <div className='flex space-x-5'>
-                                    <div>
-                                        <BsCalendar4Week className='w-5 h-5' />
-                                    </div>
-                                    <div>
-                                        Absence
-                                    </div>
-                                </div>
-                            </NavLink>
-                            <NavLink
-                                to="/personnel/excelImporter"
-                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
-                                <div className='flex space-x-5'>
-                                    <div>
-                                        <MdOutlineArchitecture className='w-6 h-6' />
-                                    </div>
-                                    <div>
-                                        Importation excel
-                                    </div>
-                                </div>
-                            </NavLink>
+
+
+                            {
+                                menuItems.map((item, index) =>
+                                    item.roles.includes(user.role) ? (
+                                        <NavLink
+                                            to={item.to}
+                                            className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                            <div className='flex space-x-5'>
+                                                <div>
+                                                    {item.icon}
+                                                </div>
+                                                <div>
+                                                    {item.label}
+                                                </div>
+                                            </div>
+                                        </NavLink>
+                                    ) : (
+                                        <NavLink
+                                            to="#"
+                                            className={`disabled-link flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center`} >
+                                            <div className='flex space-x-5'>
+                                                <div>
+                                                    {item.icon}
+                                                </div>
+                                                <div>
+                                                    {item.label}
+                                                </div>
+                                            </div>
+                                        </NavLink>
+                                    ))
+                            }
                         </div>
                     </div>
                 </div>

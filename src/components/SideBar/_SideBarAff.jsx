@@ -2,9 +2,11 @@ import { NavLink } from 'react-router-dom';
 import React, { useState } from 'react';
 import { TbHeartRateMonitor } from "react-icons/tb";
 import { LuMonitorStop } from "react-icons/lu";
+import { useAuth } from '../../AuthContext';
 
 function _SideBarAff() {
     const [openMenuIndexes, setOpenMenuIndexes] = useState([]);
+    const { user } = useAuth();
 
     const bgColor = "bg-green-600"
 
@@ -17,6 +19,12 @@ function _SideBarAff() {
             }
         });
     };
+
+    const menuItems = [
+        { label: 'Presence', to: '/affichage/a_presence', roles: ["ADMINISTRATEUR", "SURVEILLANT"], icon: <TbHeartRateMonitor className='w-5 h-5' /> },
+    ];
+
+    const accessibleMenu = menuItems.filter((item) => item.roles.includes(user?.role));
 
     return (
         <div className='p-1'>
@@ -33,7 +41,23 @@ function _SideBarAff() {
                     <hr className="my-1 border border-slate-700" />
                     <div className="px-1 py-1 mt-2">
                         <div className='rounded-lg py-2 shadow-slate-700 shadow-2xl'>
-                            <NavLink
+                            {
+                                accessibleMenu.map((item) => (
+                                    <NavLink
+                                        to={item.to}
+                                        className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
+                                        <div className='flex space-x-5'>
+                                            <div>
+                                                {item.icon}
+                                            </div>
+                                            <div>
+                                                {item.label}
+                                            </div>
+                                        </div>
+                                    </NavLink>
+                                ))
+                            }
+                            {/* <NavLink
                                 to="#"
                                 className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
                                 <div className='flex space-x-5'>
@@ -56,7 +80,7 @@ function _SideBarAff() {
                                         Présence
                                     </div>
                                 </div>
-                            </NavLink>
+                            </NavLink> */}
                         </div>
                     </div>
                 </div>

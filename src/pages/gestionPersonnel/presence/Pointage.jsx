@@ -3,7 +3,7 @@ import _Heure from "./_Heure"
 import PersonnelCard from "./_PersonnelCard"
 import { getCurrentTime } from "../../../fonction"
 import api from "../../../api"
-import { addNotify, errorNotify } from "../../../components/Notification/ToastUtil"
+import { addNotify, errorNotify, checkNotify } from "../../../components/Notification/ToastUtil"
 import _TabGroup from "../../../components/Tab/_TabGroup"
 import { lireTexte } from "../../../fonction"
 
@@ -56,7 +56,7 @@ const Pointage = ({ initialTypePointage }) => {
             setPersonnel(personnel.data);
 
             lireTexte(personnel.data.matricule, 1, 1, 1);
-            addNotify({ message: personnel.data.matricule });
+            checkNotify({ message: personnel.data.matricule });
 
             setFormDatas(initialFormState);
         } catch (error) {

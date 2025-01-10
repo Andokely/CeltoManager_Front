@@ -45,6 +45,7 @@ const Profil = () => {
         if (token) {
             try {
                 const decoded = decodeToken(token);
+                console.log(decoded)
                 await getUserById(decoded.userId)
 
             } catch (error) {

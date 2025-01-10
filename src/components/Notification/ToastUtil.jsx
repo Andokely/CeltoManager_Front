@@ -11,3 +11,10 @@ export const warningNotify = ({ message }) => {
 export const errorNotify = ({ message }) => {
     toast.error(message);
 };
+
+export const checkNotify = ({ message }) => {
+    toast.info(message, {
+        autoClose: 20000,
+        position: 'top-left'
+    });
+};
