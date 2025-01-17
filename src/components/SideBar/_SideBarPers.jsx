@@ -24,9 +24,9 @@ function _SideBarPers() {
     };
 
     const menuItems = [
-        { label: 'Personnel', to: '/personnel/liste', roles: ["SURVEILLANT"], icon: <MdDashboard className='w-5 h-5' /> },
+        { label: 'Personnel', to: '/personnel/liste', roles: ["ADMINISTRATEUR"], icon: <MdDashboard className='w-5 h-5' /> },
         { label: 'Présence', to: '/personnel/presence', roles: ["ADMINISTRATEUR"], icon: <MdSupervisedUserCircle className='w-6 h-6' /> },
-        { label: 'Absence', to: '/personnel/absence', roles: ["SURVEILLANT"], icon: <BsCalendar4Week className='w-5 h-5' /> },
+        { label: 'Absence', to: '/personnel/absence', roles: ["ADMINISTRATEUR"], icon: <BsCalendar4Week className='w-5 h-5' /> },
         { label: 'Importation Excel', to: '/personnel/excelImporter', roles: ["SURVEILLANT"], icon: <MdOutlineArchitecture className='w-6 h-6' /> },
     ];
 

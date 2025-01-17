@@ -26,13 +26,13 @@ function MainMenu() {
             to: "/production",
             label: "Production",
             img: "/image/production.png",
-            roles: ["SURVEILLANT"]
+            roles: ["ADMINISTRATEUR"]
         },
         {
             to: "/affichage",
             label: "Affichage",
             img: "/image/affichage.png",
-            roles: ["SURVEILLANT"]
+            roles: ["ADMINISTRATEUR"]
         }
     ];
 
@@ -41,19 +41,19 @@ function MainMenu() {
             to: "/capteur",
             label: "Capteur",
             img: "/image/capteur.png",
-            roles: ["SURVEILLANT"]
+            roles: ["ADMINISTRATEUR"]
         },
         {
             to: "/production",
             label: "Stock",
             img: "/image/production.png",
-            roles: ["SURVEILLANT"]
+            roles: ["ADMINISTRATEUR"]
         },
         {
             to: "/utilisateur",
             label: "Utilisateur",
             img: "/image/utilisateur.png",
-            roles: ["SURVEILLANT"]
+            roles: ["ADMINISTRATEUR"]
         }
     ];
 

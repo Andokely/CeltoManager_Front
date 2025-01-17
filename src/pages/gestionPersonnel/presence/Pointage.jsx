@@ -116,6 +116,7 @@ const Pointage = ({ initialTypePointage }) => {
                     >
                         <PersonnelCard
                             photo={`/profil/${personnel.lienPhoto || 'x.jpeg'}`}
+                            // photo={`/profil/AM003.jpg'}`}
                             nom={personnel.nom || '--'}
                             prenom={personnel.prenoms || '--'}
                             poste={personnel.poste || '--'}
