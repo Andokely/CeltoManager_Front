@@ -14,7 +14,7 @@ export const errorNotify = ({ message }) => {
 
 export const checkNotify = ({ message }) => {
     toast.info(message, {
-        autoClose: 20000,
+        autoClose: 1000,
         position: 'top-left'
     });
 };

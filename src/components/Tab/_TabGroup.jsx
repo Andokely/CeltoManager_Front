@@ -5,8 +5,8 @@ function _TabGroup({ tabs }) {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <div className="md:flex p-4">
-      <ul className="flex-column space-y-2 text-sm font-medium md:me-4 mb-4 md:mb-0" style={{ color: 'var(--text-color)' }}>
+    <div className="md:flex flex-col p-4">
+      <ul className="flex space-x-3 text-sm font-medium md:me-4 mb-4 md:mb-0" style={{ color: 'var(--text-color)' }}>
         {tabs.map((tab, index) => (
           <li key={index}>
             <_TabItem
@@ -19,7 +19,7 @@ function _TabGroup({ tabs }) {
           </li>
         ))}
       </ul>
-      <div className="p-6 text-medium rounded-lg w-full" style={{ color: 'var(--text-color)', backgroundColor : 'var(--primary-5)' }}>
+      <div className="px-6 py-2 mt-2 text-medium rounded-lg w-full" style={{ color: 'var(--text-color)', backgroundColor : 'var(--primary-5)' }}>
         <h3 className="text-lg font-bold mb-2">
           {tabs[activeTab].title}
         </h3>

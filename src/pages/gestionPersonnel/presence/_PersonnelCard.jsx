@@ -19,7 +19,7 @@ const PersonnelCard = ({
                     <img
                         src={photo}
                         alt="Profil"
-                        className="w-36 h-36 rounded-full border-4 border-white shadow-md"
+                        className="w-50 h-50 rounded-[50px] border-white shadow-md"
                     />
                 </div>
 
