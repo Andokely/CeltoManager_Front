@@ -110,10 +110,10 @@ const Pointage = ({ initialTypePointage }) => {
 
     return (
         <>
-            <div className="h-[55vh] gap-2 w-full flex">
-                <div className="grid grid-cols-7 rounded-xl shadow-lg h-[340px] w-[750px]"
+            <div className="h-[54vh] w-full flex">
+                <div className="grid grid-cols-7 rounded-lg h-[340px] w-[750px]"
                     style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }}>
-                    <div className='h-full col-span-2 flex flex-col justify-center space-y-1 items-center'>
+                    <div className='h-full col-span-2 shadow-lg flex flex-col justify-center space-y-1 items-center'>
                         < _Heure nombre={nombre} effectif={effectif} />
                         <div className='w-4/5 max-w-md'>
                             <div className=''>
@@ -140,9 +140,9 @@ const Pointage = ({ initialTypePointage }) => {
                         </div>
                     </div>
                     <div
-                        className="h-full w-full p-5 flex items-center justify-center col-span-5 rounded-r-[50px]"
+                        className="h-full w-full px-6 flex items-center justify-center col-span-5"
                         style={{
-                            backgroundColor: 'var(--primary-3)',
+                            backgroundColor: 'var(--primary-5)',
                             color: 'var(--text-color)',
                         }}
                     >
@@ -157,22 +157,25 @@ const Pointage = ({ initialTypePointage }) => {
                         />
                     </div>
                 </div>
-                <div className="px-1 overflow-y-auto w-[220px] h-[340px]" ref={listRef}>
+                <div className="px-1 overflow-y-auto w-[220px] h-[340px]" style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }} ref={listRef}>
                     <ul className="">
                         {presences.map((presence, index) => (
-                            <li
-                                key={index}
-                                className="flex items-center rounded-lg shadow-md py-1 px-5 transition-colors"
-                                style={{
-                                    color: "var(--text-color)",
-                                }}
-                            >
-                                <div className="flex items-center" style={{ color: 'var(--text-color)' }}>
-                                    <span className="text-[7px] px-1 rounded-full" style={{ backgroundColor: 'var(--primary-4)' }}>{index + 1}</span>
-                                    <span className="font-semibold text-sm ml-3">{presence.personnel.matricule}</span>
-                                    <span className="text-[12px] ml-3">{limiterCaractere((presence.personnel.prenoms).split(" ")[0], 10)}</span>
-                                </div>
-                            </li>
+                            <>
+                                <li
+                                    key={index}
+                                    className="flex items-center rounded-lg px-5 transition-colors"
+                                    style={{
+                                        color: "var(--text-color)",
+                                    }}
+                                >
+                                    <div className="flex items-center" style={{ color: 'var(--text-color)' }}>
+                                        <span className="text-[7px] px-1 rounded-full" style={{ backgroundColor: 'var(--primary-4)' }}>{index + 1}</span>
+                                        <span className="font-semibold text-sm ml-3">{presence.personnel.matricule}</span>
+                                        <span className="text-[12px] ml-3">{limiterCaractere((presence.personnel.prenoms).split(" ")[0], 10)}</span>
+                                    </div>
+                                </li>
+                                <hr className="my-1" />
+                            </>
                         ))}
                     </ul>
                 </div>

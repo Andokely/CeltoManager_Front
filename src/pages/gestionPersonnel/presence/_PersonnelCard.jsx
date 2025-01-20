@@ -10,7 +10,7 @@ const PersonnelCard = ({
     secteur
 }) => {
     return (
-        <div className="w-full h-full rounded-[50px] overflow-hidden flex flex-col" style={{ backgroundColor: 'var(--primary-1)', color: 'var(--text-color)' }}>
+        <div className="w-full h-auto rounded-[20px] shadow-lg overflow-hidden flex flex-col" style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }}>
             <div className="text-center py-3" style={{ backgroundColor: 'var(--primary-4)' }}>
                 <h1 className="text-3xl font-bold uppercase">{matricule}</h1>
             </div>
@@ -19,7 +19,7 @@ const PersonnelCard = ({
                     <img
                         src={photo}
                         alt="Profil"
-                        className="w-50 h-50 rounded-[50px] border-white shadow-md"
+                        className="w-62 h-60 max-h-[200px] rounded-lg border-white shadow-md"
                     />
                 </div>
 

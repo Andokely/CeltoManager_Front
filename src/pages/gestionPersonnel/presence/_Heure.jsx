@@ -24,7 +24,7 @@ const _Heure = ({ nombre, effectif }) => {
     });
 
     return (
-        <div className="flex flex-col w-[80%] py-5 rounded-xl items-center justify-center"
+        <div className="flex flex-col w-[100%] py-3 rounded-xl items-center justify-center"
             style={{ color: 'var(--text-color)' }}>
             <div className="text-center">
                 <div className="flex items-center gap-5">
