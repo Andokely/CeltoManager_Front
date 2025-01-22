@@ -111,11 +111,49 @@ const Pointage = ({ initialTypePointage }) => {
     return (
         <>
             <div className="h-[54vh] w-full flex">
-                <div className="grid grid-cols-7 rounded-lg h-[340px] w-[750px]"
+                <div className="grid grid-cols-9 rounded-lg"
                     style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }}>
-                    <div className='h-full col-span-2 shadow-lg flex flex-col justify-center space-y-1 items-center'>
+                    <div className="px-1 overflow-y-auto col-span-2" style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }} ref={listRef}>
+                        <ul className="">
+                            {presences.map((presence, index) => (
+                                <>
+                                    <li
+                                        key={index}
+                                        className="flex items-center rounded-lg px-5 transition-colors"
+                                        style={{
+                                            color: "var(--text-color)",
+                                        }}
+                                    >
+                                        <div className="flex items-center" style={{ color: 'var(--text-color)' }}>
+                                            <span className="text-[7px] px-1 rounded-full" style={{ backgroundColor: 'var(--primary-4)' }}>{index + 1}</span>
+                                            <span className="font-semibold text-sm ml-3">{presence.personnel.matricule}</span>
+                                            <span className="text-[12px] ml-3">{limiterCaractere((presence.personnel.prenoms).split(" ")[0], 10)}</span>
+                                        </div>
+                                    </li>
+                                    <hr className="my-1" />
+                                </>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="h-full px-6 flex items-center col-span-5"
+                        style={{
+                            backgroundColor: 'var(--primary-5)',
+                            color: 'var(--text-color)',
+                        }}
+                    >
+                        <PersonnelCard
+                            photo={`/profil/${personnel.lienPhoto || 'x.jpeg'}`}
+                            nom={personnel.nom || '--'}
+                            prenom={personnel.prenoms || '--'}
+                            poste={personnel.poste || '--'}
+                            matricule={personnel.matricule || '--'}
+                            chaine={personnel.chaine || '--'}
+                            secteur={personnel.secteur || '--'}
+                        />
+                    </div>
+                    <div className='h-full w-full px-2 col-span-2 flex flex-col justify-center space-y-1'>
                         < _Heure nombre={nombre} effectif={effectif} />
-                        <div className='w-4/5 max-w-md'>
+                        <div className=''>
                             <div className=''>
                                 <div className='flex flex-col'>
                                     <input
@@ -139,45 +177,6 @@ const Pointage = ({ initialTypePointage }) => {
                             </div>
                         </div>
                     </div>
-                    <div
-                        className="h-full w-full px-6 flex items-center justify-center col-span-5"
-                        style={{
-                            backgroundColor: 'var(--primary-5)',
-                            color: 'var(--text-color)',
-                        }}
-                    >
-                        <PersonnelCard
-                            photo={`/profil/${personnel.lienPhoto || 'x.jpeg'}`}
-                            nom={personnel.nom || '--'}
-                            prenom={personnel.prenoms || '--'}
-                            poste={personnel.poste || '--'}
-                            matricule={personnel.matricule || '--'}
-                            chaine={personnel.chaine || '--'}
-                            secteur={personnel.secteur || '--'}
-                        />
-                    </div>
-                </div>
-                <div className="px-1 overflow-y-auto w-[220px] h-[340px]" style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }} ref={listRef}>
-                    <ul className="">
-                        {presences.map((presence, index) => (
-                            <>
-                                <li
-                                    key={index}
-                                    className="flex items-center rounded-lg px-5 transition-colors"
-                                    style={{
-                                        color: "var(--text-color)",
-                                    }}
-                                >
-                                    <div className="flex items-center" style={{ color: 'var(--text-color)' }}>
-                                        <span className="text-[7px] px-1 rounded-full" style={{ backgroundColor: 'var(--primary-4)' }}>{index + 1}</span>
-                                        <span className="font-semibold text-sm ml-3">{presence.personnel.matricule}</span>
-                                        <span className="text-[12px] ml-3">{limiterCaractere((presence.personnel.prenoms).split(" ")[0], 10)}</span>
-                                    </div>
-                                </li>
-                                <hr className="my-1" />
-                            </>
-                        ))}
-                    </ul>
                 </div>
             </div>
         </>
