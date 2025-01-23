@@ -126,13 +126,19 @@ const Pointage = ({ initialTypePointage }) => {
                     <div className="w-full rounded-t-lg col-span-2">
                         <div className="flex rounded-b-lg justify-between items-center px-4 py-1">
                             <p className="font-semibold">Liste des matricules</p>
-                            <_BtnIcon
-                                icon={MdDeleteSweep}
-                                variant="danger"
-                                size="sm"
-                                onClick={() => viderListe()}
-                                className='w-5 h-5'
-                            />
+                            {
+                                presenceTemp.length === 0 ? (
+                                    ""
+                                ) : (
+                                    <_BtnIcon
+                                        icon={MdDeleteSweep}
+                                        variant="danger"
+                                        size="sm"
+                                        onClick={() => viderListe()}
+                                        className='w-5 h-5'
+                                    />
+                                )
+                            }
                         </div>
                         <hr className="border mb-2" style={{ borderColor: 'var(--border-color)' }} />
                         <div className="px-1 overflow-y-auto h-[46vh]" style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }} ref={listRef}>
