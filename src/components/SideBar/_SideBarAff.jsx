@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import React, { useState } from 'react';
 import { TbHeartRateMonitor } from "react-icons/tb";
-import { LuMonitorStop } from "react-icons/lu";
+import { MdOutlineScreenshotMonitor } from "react-icons/md";
 import { useAuth } from '../../AuthContext';
 
 function _SideBarAff() {
@@ -22,6 +22,7 @@ function _SideBarAff() {
 
     const menuItems = [
         { label: 'Presence', to: '/affichage/a_presence', roles: ["ADMINISTRATEUR", "SURVEILLANT"], icon: <TbHeartRateMonitor className='w-5 h-5' /> },
+        { label: 'Piquage', to: '/affichage/machiniste', roles: ["ADMINISTRATEUR", "SURVEILLANT"], icon: <MdOutlineScreenshotMonitor className='w-5 h-5' /> },
     ];
 
     const accessibleMenu = menuItems.filter((item) => item.roles.includes(user?.role));
@@ -57,30 +58,6 @@ function _SideBarAff() {
                                     </NavLink>
                                 ))
                             }
-                            {/* <NavLink
-                                to="#"
-                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
-                                <div className='flex space-x-5'>
-                                    <div>
-                                        <TbHeartRateMonitor className='w-5 h-5' />
-                                    </div>
-                                    <div>
-                                        Chaine
-                                    </div>
-                                </div>
-                            </NavLink>
-                            <NavLink
-                                to="/affichage/a_presence"
-                                className={({ isActive }) => `flex space-x-5 h-[6vh] rounded-lg text-white px-8 place-items-center  ${isActive ? bgColor : 'hover:bg-slate-700'}`}>
-                                <div className='flex space-x-5'>
-                                    <div>
-                                        <LuMonitorStop className='w-5 h-5' />
-                                    </div>
-                                    <div>
-                                        Présence
-                                    </div>
-                                </div>
-                            </NavLink> */}
                         </div>
                     </div>
                 </div>

@@ -17,27 +17,27 @@ const _PersonnelCard = ({ id, matricule, nom, prenoms, lienPhoto, po, presences 
                 color: 'var(--text-color)'
             }}
         >
-            <LazyLoadImage
+            {/* <LazyLoadImage
                 className="w-20 max-h-16 object-cover"
                 src={`/profil/${lienPhoto ? lienPhoto : "x.jpeg"}`}
                 alt="Profil"
                 effect="blur"
                 loading="lazy"
-            />
-            <div className="py-2 px-3">
-                <h2 className="font-semibold">{`${matricule}`}</h2>
-                <p className="">
+            /> */}
+            <div className="py-[0.3rem] px-3">
+                <p className="text-sm">{`${matricule}`}</p>
+                {/* <p className="">
                     <span className="text-sm">{`${limiterCaractere(prenoms, 9)}`}</span>
-                </p>
+                </p> */}
             </div>
             {po && (
                 <div className="flex items-center pr-2 pl-1 rounded-r-lg">
-                    <p className="font-medium text-white w-6 h-6 flex items-center justify-center rounded-full"
+                    <p className="font-medium text-sm text-white w-5 h-5 flex items-center justify-center rounded-full"
                         style={{
                             backgroundColor: 'var(--primary-3)',
                             color: 'var(--text-color)'
                         }}>
-                        <span className="font-medium">{po}</span>
+                        <span className="font-medium text-sm">{po}</span>
                     </p>
                 </div>
             )}

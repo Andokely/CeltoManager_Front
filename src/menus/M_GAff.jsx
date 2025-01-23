@@ -7,12 +7,14 @@ import { _LoadingGestionGif } from '../components/_Loading';
 import Chaine from '../pages/gestionAffichage/chaine/Chaine';
 import ProtectedRoute from '../ProtectedRoute';
 import NotAccess from '../pages/NotAccess';
+import Machiniste from '../pages/gestionAffichage/presence/Machiniste';
 
 function M_GAff() {
     const location = useLocation();
     const [loading, setLoading] = useState(false);
 
     const isPresencePage = location.pathname === "/affichage/a_presence";
+    const isMachinistePage = location.pathname === "/affichage/machiniste";
 
 
     useEffect(() => {
@@ -32,19 +34,23 @@ function M_GAff() {
         <>
             {loading ? (
                 <div className="App flex" style={{ backgroundColor: 'var(--primary-1)' }}>
-                    {!isPresencePage && (
+                    {!isPresencePage && !isMachinistePage && (
                         <div className='w-[calc(22rem+20px)] z-30 '>
                             <_SideBarAff />
                         </div>
                     )}
                     <div className="content w-full min-h-[calc(100vh-4px)] flex flex-col" style={{ backgroundColor: 'var(--primary-1)', color: 'var(--white)' }}>
-                        <div className='px-5 py-3 w-full z-30 sticky top-0 backdrop-blur-xl'>
-                            <_NavBar />
-                        </div>
+                        {!isMachinistePage && (
+                            <div className='px-5 py-3 w-full z-30 sticky top-0 backdrop-blur-xl'>
+                                <_NavBar />
+                            </div>
+
+                        )}
                         <div className='mt-[0vh]'>
                             <Routes>
                                 <Route path="/" element={<Navigate to="chaine" replace />} />
                                 <Route path="a_presence" element={<ProtectedRoute requiredRole={["ADMINISTRATEUR", "SURVEILLANT"]}><Presence /></ProtectedRoute>} />
+                                <Route path="machiniste" element={<ProtectedRoute requiredRole={["ADMINISTRATEUR", "SURVEILLANT"]}><Machiniste /></ProtectedRoute>} />
                                 <Route path="chaine" element={<Chaine />} />
                                 <Route path="no" element={<NotAccess />} />
                             </Routes>

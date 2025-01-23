@@ -5,11 +5,12 @@ import { getCurrentTime } from "../../../fonction";
 import api from "../../../api";
 import { addNotify, errorNotify, checkNotify } from "../../../components/Notification/ToastUtil";
 import _TabGroup from "../../../components/Tab/_TabGroup";
-import { lireTexte } from "../../../fonction";
-import { limiterCaractere } from "../../../fonction";
+import { _BtnIcon } from "../../../components/_Bouton";
+import { MdDeleteSweep } from "react-icons/md";
+
 
 const Pointage = ({ initialTypePointage }) => {
-    const [personnel, setPersonnel] = useState([]);
+    const [personnel, setPersonnel] = useState(null);
     const [typePointage, setTypePointage] = useState(initialTypePointage || null);
     const initialFormState = {
         matricule: '',
@@ -17,6 +18,7 @@ const Pointage = ({ initialTypePointage }) => {
     const [formDatas, setFormDatas] = useState(initialFormState);
     const [loading, setLoading] = useState(true);
     const [presences, setPresences] = useState([]);
+    const [presenceTemp, setPresenceTemp] = useState([]);
 
     const listRef = useRef(null);
 
@@ -43,7 +45,6 @@ const Pointage = ({ initialTypePointage }) => {
                     api.get('/presences'),
                     api.get('/personnels'),
                 ]);
-                setPresences(presenceResponse.data.presences);
                 setNombre(presenceResponse.data.presences.length);
                 setEffectif(personnelResponse.data.personnels.length);
             } catch (error) {
@@ -64,13 +65,13 @@ const Pointage = ({ initialTypePointage }) => {
 
     useEffect(() => {
         scrollToBottom();
-    }, [presences]);
+    }, [presenceTemp]);
 
     useEffect(() => {
         if (listRef.current) {
             listRef.current.scrollTop = listRef.current.scrollHeight;
         }
-    }, [presences]);
+    }, [presenceTemp]);
 
     const handleSubmit = async () => {
         try {
@@ -83,15 +84,17 @@ const Pointage = ({ initialTypePointage }) => {
 
             const endpoint = typePointage.includes("Entrée") ? "/presences" : "/presences/sortie";
             const response = await api.post(endpoint, JSON.stringify(updatedFormDatas));
-            const personnelResponse = await api.get(`/personnels/${response.data.presence.personnelId}`);
 
-            setPersonnel(personnelResponse.data);
-            setNombre(prev => prev + 1);  // Utilisation de la mise à jour fonctionnelle
-            checkNotify({ message: personnelResponse.data.matricule });
+            setPersonnel(response.data.matricule);
+            setNombre(prev => prev + 1);
+            checkNotify({ message: response.data.matricule });
 
-            setPresences((prevPresences) => [
+            setPresenceTemp((prevPresences) => [
                 ...prevPresences,
-                { personnel: personnelResponse.data }
+                {
+                    personnel: response.data.matricule,
+                    time: getCurrentTime()
+                }
             ]);
             setFormDatas(initialFormState);
         } catch (error) {
@@ -108,32 +111,56 @@ const Pointage = ({ initialTypePointage }) => {
         }
     };
 
+    const viderListe = () => {
+        setPresenceTemp([])
+        setPersonnel(null)
+        addNotify({ message: "La liste a été vidée avec succès" });
+
+    }
+
     return (
         <>
             <div className="h-[54vh] w-full flex">
-                <div className="grid grid-cols-9 rounded-lg"
+                <div className="grid grid-cols-9"
                     style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }}>
-                    <div className="px-1 overflow-y-auto col-span-2" style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }} ref={listRef}>
-                        <ul className="">
-                            {presences.map((presence, index) => (
-                                <>
-                                    <li
-                                        key={index}
-                                        className="flex items-center rounded-lg px-5 transition-colors"
-                                        style={{
-                                            color: "var(--text-color)",
-                                        }}
-                                    >
-                                        <div className="flex items-center" style={{ color: 'var(--text-color)' }}>
-                                            <span className="text-[7px] px-1 rounded-full" style={{ backgroundColor: 'var(--primary-4)' }}>{index + 1}</span>
-                                            <span className="font-semibold text-sm ml-3">{presence.personnel.matricule}</span>
-                                            <span className="text-[12px] ml-3">{limiterCaractere((presence.personnel.prenoms).split(" ")[0], 10)}</span>
-                                        </div>
-                                    </li>
-                                    <hr className="my-1" />
-                                </>
-                            ))}
-                        </ul>
+                    <div className="w-full rounded-t-lg col-span-2">
+                        <div className="flex rounded-b-lg justify-between items-center px-4 py-1">
+                            <p className="font-semibold">Liste des matricules</p>
+                            <_BtnIcon
+                                icon={MdDeleteSweep}
+                                variant="danger"
+                                size="sm"
+                                onClick={() => viderListe()}
+                                className='w-5 h-5'
+                            />
+                        </div>
+                        <hr className="border mb-2" style={{ borderColor: 'var(--border-color)' }} />
+                        <div className="px-1 overflow-y-auto h-[46vh]" style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }} ref={listRef}>
+                            <ul className="">
+                                {presenceTemp.length === 0 ? (
+                                    <div className="flex items-center justify-center mt-2 italic">......</div>
+                                ) : (
+                                    presenceTemp.map((presence, index) => (
+                                        <>
+                                            <li
+                                                key={index}
+                                                className="flex items-center rounded-lg px-5 transition-colors"
+                                                style={{
+                                                    color: "var(--text-color)",
+                                                }}
+                                            >
+                                                <div className="flex items-center" style={{ color: 'var(--text-color)' }}>
+                                                    <span className="text-sm px-1 rounded-full" style={{ backgroundColor: 'var(--primary-4)' }}>{index + 1}</span>
+                                                    <span className="text-sm ml-4">{presence.time}</span>
+                                                    <span className="text-sm ml-4">{presence.personnel}</span>
+                                                </div>
+                                            </li>
+                                            <hr className="my-1 border" />
+                                        </>
+                                    ))
+                                )}
+                            </ul>
+                        </div>
                     </div>
                     <div className="h-full px-6 flex items-center col-span-5"
                         style={{
@@ -142,13 +169,8 @@ const Pointage = ({ initialTypePointage }) => {
                         }}
                     >
                         <PersonnelCard
-                            photo={`/profil/${personnel.lienPhoto || 'x.jpeg'}`}
-                            nom={personnel.nom || '--'}
-                            prenom={personnel.prenoms || '--'}
-                            poste={personnel.poste || '--'}
-                            matricule={personnel.matricule || '--'}
-                            chaine={personnel.chaine || '--'}
-                            secteur={personnel.secteur || '--'}
+                            photo={`/profil/${personnel ? `${personnel}.jpg` : 'x.jpeg'}`}
+                            matricule={personnel || '-----'}
                         />
                     </div>
                     <div className='h-full w-full px-2 col-span-2 flex flex-col justify-center space-y-1'>
