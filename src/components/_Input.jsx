@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { _BtnIconeED } from './_Bouton';
+import { FaSearch, FaHome } from "react-icons/fa";
 
 export const _TextInput = ({
     type = 'text',
@@ -193,5 +195,49 @@ _IntInput.propTypes = {
     min: PropTypes.number,
     max: PropTypes.number,
     step: PropTypes.number,
+};
+
+export const _InputSearch = ({
+    name,
+    placeholder = '',
+    value = '',
+    onChange = () => { },
+    onClickSearch = () => { },
+    className = '',
+
+}) => {
+    return (
+        <>
+            <div className={`flex ${className}`}>
+                <input
+                    type={"text"}
+                    name={name}
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={onChange}
+                    className="px-4 py-1 mr-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700"
+                    style={{ backgroundColor: 'var(--primary-3)', color: 'var(--text-color)' }}
+                />
+                <div className="mr-7">
+                    <_BtnIconeED
+                        onClick={onClickSearch}
+                        width={24}
+                        height={24}
+                        Icon={FaSearch}
+                        className={'text-green-500'}
+                        fill={'#2072AF'}
+                    />
+                </div>
+            </div>
+        </>
+    )
+};
+
+_InputSearch.propTypes = {
+    name: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    onChange: PropTypes.func,
+    onClickSearch: PropTypes.func,
 };
 

@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 import api from "../../../api";
 import _Tabs from "../../../components/Tab/_Tabs";
 import _PersonnelCard from "./_PersonnelCard";
+import { io } from "socket.io-client";
+import config from "../../../../config.json";
 
 const PresencePoste = ({ labelPoste }) => {
     const navigate = useNavigate();
     const [personnel, setPersonnel] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [presence, setPresence] = useState([])
-
+    const [presence, setPresence] = useState([]);
 
     useEffect(() => {
         fetchPersonnelPoste();
@@ -18,7 +19,7 @@ const PresencePoste = ({ labelPoste }) => {
 
     const fetchPersonnelPoste = async () => {
         try {
-            const dataObject = { poste: labelPoste }
+            const dataObject = { poste: labelPoste };
             const response = await api.post(`personnels/poste`, JSON.stringify(dataObject));
             setPersonnel(response.data);
         } catch (error) {
@@ -35,13 +36,32 @@ const PresencePoste = ({ labelPoste }) => {
     const fetchPresence = async () => {
         try {
             const response = await api.get(`/presences`);
-            setPresence(response.data.presences);
+            setPresence(response.data.presences.map(p => p.personnel.matricule)); 
         } catch (error) {
             console.error('Error fetching categories:', error);
         } finally {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        const socket = io(config.SOCKET);
+
+        socket.on("updateMatricule", (matricule) => {
+
+            setPresence((prevPresence) => {
+                if (!prevPresence.includes(matricule)) {
+                    return [...prevPresence, matricule];
+                }
+                return prevPresence;
+            });
+        });
+
+        return () => {
+            socket.disconnect();
+        };
+    }, []);
+
     return (
         <>
             <div className="p-3 flex gap-8 rounded-lg" style={{ backgroundColor: 'var(--primary-5)' }}>
@@ -73,7 +93,6 @@ const PresencePoste = ({ labelPoste }) => {
                         <p>Aucun personnel trouvé.</p>
                     </div>
                 )}
-
             </div>
         </>
     );

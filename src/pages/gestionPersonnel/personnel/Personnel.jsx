@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { _Cellule, _CellulePhoto } from "../../../components/_Cellule";
 import _UploadImage from "../../../components/_UploadImage";
 import { convertirDateEnFormatFrancais } from "../../../fonction";
+import { _InputSearch } from "../../../components/_Input";
 import api from "../../../api";
 Modal.setAppElement('#root');
 
@@ -29,6 +30,7 @@ function Personnel() {
     const [selectedChaine, setSelectedChaine] = useState(null);
     const [selectedPersonnelId, setSelectedPersonnelId] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [searchValue, setSearchValue] = useState("");
     const initialFormState = {
         matricule: '',
         nom: '',
@@ -298,51 +300,60 @@ function Personnel() {
         { Header: "Prénoms", accessor: "prenoms", className: "text-center" },
         { Header: "Adresse", accessor: "adresse", className: "text-center" },
         { Header: "Télephone", accessor: "telephone", className: "text-center" },
-        // { Header: "Embauche", accessor: "embauche", className: "text-center" },
-        // { Header: "Salaire", accessor: "salaire", className: "text-center" },
-        // { Header: "Catégorie", accessor: "categorie", className: "text-center" },
         { Header: "Poste", accessor: "poste", className: "text-center" },
-        // { Header: "Chaine", accessor: "chaine", className: "text-center" },
-        // { Header: "Secteur", accessor: "secteur", className: "text-center" },
         { Header: "Action", accessor: "action", className: "text-center" },
 
     ];
 
-    const dataTable = personnels.map((personnel) => ({
-        photo: (<_CellulePhoto valeur={personnel.lienPhoto} />),
-        matricule: (<_Cellule valeur={personnel.matricule} />),
-        nom: (<_Cellule valeur={personnel.nom} />),
-        prenoms: (<_Cellule valeur={personnel.prenoms} />),
-        adresse: (<_Cellule valeur={personnel.adresse} />),
-        telephone: (<_Cellule valeur={personnel.telephone} />),
-        // embauche: (<_Cellule valeur={convertirDateEnFormatFrancais(personnel.embauche)} />),
-        // salaire: (<_Cellule valeur={personnel.salaire} />),
-        // categorie: (<_Cellule valeur={personnel.categorie} />),
-        poste: (<_Cellule valeur={personnel.poste} />),
-        // chaine: (<_Cellule valeur={personnel.chaine} />),
-        // secteur: (<_Cellule valeur={personnel.secteur} />),
-        action: (
-            <>
-                <div className="flex justify-center space-x-5">
-                    <MdEdit
-                        className="text-blue-500 cursor-pointer"
-                        size={20}
-                        onClick={() => getPersonnelById(personnel.id)}
-                    />
-                    <MdDelete
-                        className="text-red-500 cursor-pointer"
-                        size={20}
-                        onClick={() => handleDelete(personnel.id)}
-                    />
-                </div>
-            </>
-        ),
+    const search = searchValue.toLowerCase();
+
+    const searchableFields = ["nom", "prenoms", "matricule", "adresse", "telephone", "poste"];
+
+    const filteredPersonnels = personnels.filter((personnel) =>
+        searchableFields.some((field) => (personnel[field]?.toLowerCase() || "").includes(search))
+    );
+
+    const renderCell = (valeur) => <_Cellule valeur={valeur} />;
+    const renderPhoto = (lienPhoto) => <_CellulePhoto valeur={lienPhoto} />;
+    const renderActions = (id) => (
+        <div className="flex justify-center space-x-5">
+            <MdEdit
+                className="text-blue-500 cursor-pointer"
+                size={20}
+                onClick={() => getPersonnelById(id)}
+            />
+            <MdDelete
+                className="text-red-500 cursor-pointer"
+                size={20}
+                onClick={() => handleDelete(id)}
+            />
+        </div>
+    );
+
+    const dataTable = filteredPersonnels.map((personnel) => ({
+        photo: renderPhoto(personnel.lienPhoto),
+        matricule: renderCell(personnel.matricule),
+        nom: renderCell(personnel.nom),
+        prenoms: renderCell(personnel.prenoms),
+        adresse: renderCell(personnel.adresse),
+        telephone: renderCell(personnel.telephone),
+        poste: renderCell(personnel.poste),
+        action: renderActions(personnel.id),
     }));
 
     return (
         <>
             <div
                 className={`transition-all duration-700 ease-in-out px-5 transform`}>
+                <div className="flex items-center justify-end">
+                    <_InputSearch
+                        className={"fixed top-2 z-10 right-8"}
+                        name="search"
+                        placeholder="Recherchez ici..."
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                    />
+                </div>
                 <_Table
                     entriesPerPage={{ defaultValue: 50, entries: [10, 25, 50, 100] }}
                     title={"Liste des personnels"}
@@ -350,7 +361,6 @@ function Personnel() {
                     table={{ columns, rows: dataTable }}
                     pagination={true}
                     loading={loading}
-                // searchQuery={searchQuery}
                 />
             </div>
             <_BtnIcon

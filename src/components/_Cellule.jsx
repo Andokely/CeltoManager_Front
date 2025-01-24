@@ -21,7 +21,7 @@ export const _CellulePhoto = ({ valeur }) => {
         <>
             <div className={"flex flex-col justify-center items-center"}>
                 <LazyLoadImage
-                    className="w-8 h-auto rounded-full"
+                    className="w-8 h-auto max-h-9 rounded-full"
                     src={`/profil/${valeur ? valeur : "x.jpeg"}`}
                     alt="Profil"
                     effect="blur"

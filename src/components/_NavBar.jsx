@@ -29,25 +29,6 @@ function _Navbar() {
             </div>
 
             <div className="flex">
-                <input
-                    type={"text"}
-                    name={"name"}
-                    placeholder={"Recherche.."}
-                    // value={value}
-                    // onChange={onChange}
-                    className="px-4 py-1 border mr-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700"
-                    style={{ backgroundColor: 'var(--primary-1)', borderColor: 'var(--border-color)' }}
-                />
-                <div className="mr-7">
-                    <_BtnIconeED
-                        onClick={() => addCapteur()}
-                        width={24}
-                        height={24}
-                        Icon={FaSearch}
-                        className={'text-green-500'}
-                        fill={'#2072AF'}
-                    />
-                </div>
                 <_Mode />
             </div>
         </div>
