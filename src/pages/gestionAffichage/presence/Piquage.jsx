@@ -5,16 +5,18 @@ import api from "../../../api";
 import _Tabs from "../../../components/Tab/_Tabs";
 import _PersonnelCard from "./_PersonnelCard";
 import { _LoadingComponents } from "../../../components/_Loading";
+import { io } from "socket.io-client";
+import config from "../../../../config.json";
 
 const Piquage = ({ labelPoste, chaine }) => {
     const navigate = useNavigate();
     const [personnel, setPersonnel] = useState([]);
-    const [presence, setPresence] = useState([])
+    const [presence, setPresence] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchPersonnelPoste();
-    }, [labelPoste, chaine]); // Déclenche fetch lorsque labelPoste ou chaine change
+    }, [labelPoste, chaine]);
 
     const fetchPersonnelPoste = async () => {
         try {
@@ -35,7 +37,7 @@ const Piquage = ({ labelPoste, chaine }) => {
     const fetchPresence = async () => {
         try {
             const response = await api.get(`/presences`);
-            setPresence(response.data.presences);
+            setPresence(response.data.presences.map(p => p.personnel.matricule));
         } catch (error) {
             console.error('Error fetching categories:', error);
         } finally {
@@ -43,9 +45,27 @@ const Piquage = ({ labelPoste, chaine }) => {
         }
     };
 
+    useEffect(() => {
+        const socket = io(config.SOCKET);
+
+        socket.on("updateMatricule", (matricule) => {
+
+            setPresence((prevPresence) => {
+                if (!prevPresence.includes(matricule)) {
+                    return [...prevPresence, matricule];
+                }
+                return prevPresence;
+            });
+        });
+
+        return () => {
+            socket.disconnect();
+        };
+    }, []);
+
     const filteredPersonnel = useMemo(() => {
         return personnel.filter(p => p.chaine === chaine);
-    }, [personnel, chaine]); 
+    }, [personnel, chaine]);
 
     return (
         <div className="flex grid grid-cols-6 gap-4 mt-3">

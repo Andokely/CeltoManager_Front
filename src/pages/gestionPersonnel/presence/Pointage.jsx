@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import _Heure from "./_Heure";
 import PersonnelCard from "./_PersonnelCard";
 import { getCurrentTime } from "../../../fonction";
@@ -7,6 +7,8 @@ import { addNotify, errorNotify, checkNotify } from "../../../components/Notific
 import _TabGroup from "../../../components/Tab/_TabGroup";
 import { _BtnIcon } from "../../../components/_Bouton";
 import { MdDeleteSweep } from "react-icons/md";
+import config from "../../../../config.json"
+import { io } from "socket.io-client";
 
 
 const Pointage = ({ initialTypePointage }) => {
@@ -19,6 +21,7 @@ const Pointage = ({ initialTypePointage }) => {
     const [loading, setLoading] = useState(true);
     const [presences, setPresences] = useState([]);
     const [presenceTemp, setPresenceTemp] = useState([]);
+    const socket = useMemo(() => io(config.SOCKET), []);
 
     const listRef = useRef(null);
 
@@ -88,6 +91,7 @@ const Pointage = ({ initialTypePointage }) => {
             setPersonnel(response.data.matricule);
             setNombre(prev => prev + 1);
             checkNotify({ message: response.data.matricule });
+            sendPresenceToServer(response.data.matricule)
 
             setPresenceTemp((prevPresences) => [
                 ...prevPresences,
@@ -102,6 +106,10 @@ const Pointage = ({ initialTypePointage }) => {
             errorNotify({ message: errorMessage });
             setFormDatas(initialFormState);
         }
+    };
+
+    const sendPresenceToServer = (matricule) => {
+        socket.emit("matricule", { matricule });
     };
 
 

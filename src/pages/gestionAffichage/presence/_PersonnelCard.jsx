@@ -7,40 +7,32 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 const _PersonnelCard = ({ id, matricule, nom, prenoms, lienPhoto, po, presences }) => {
 
     const isPresent = useMemo(() => {
-        return presences.some(p => p.personnel.matricule === matricule);
+        return presences.includes(matricule);
     }, [presences, matricule]);
 
     return (
-        <div className="flex justify-between shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+        <div className="flex justify-between shadow-lg rounded-md overflow-hidden hover:shadow-xl transition-shadow duration-800"
             style={{
                 backgroundColor: isPresent ? 'var(--primary-4)' : 'var(--primary-6)',
                 color: 'var(--text-color)'
             }}
         >
-            {/* <LazyLoadImage
-                className="w-20 max-h-16 object-cover"
-                src={`/profil/${lienPhoto ? lienPhoto : "x.jpeg"}`}
-                alt="Profil"
-                effect="blur"
-                loading="lazy"
-            /> */}
-            <div className="py-[0.3rem] px-3">
+            <div className="py-[0.4rem] px-3">
                 <p className="text-sm">{`${matricule}`}</p>
-                {/* <p className="">
-                    <span className="text-sm">{`${limiterCaractere(prenoms, 9)}`}</span>
-                </p> */}
             </div>
-            {po && (
-                <div className="flex items-center pr-2 pl-1 rounded-r-lg">
-                    <p className="font-medium text-sm text-white w-5 h-5 flex items-center justify-center rounded-full"
-                        style={{
-                            backgroundColor: 'var(--primary-3)',
-                            color: 'var(--text-color)'
-                        }}>
+            <div className="flex items-center pr-2 pl-1 rounded-r-lg">
+                <p className="font-medium text-sm text-white w-5 h-5 flex items-center justify-center rounded-full"
+                    style={{
+                        backgroundColor: po ? 'var(--primary-3)' : 'var(--primary-1)',
+                        color: 'var(--text-color)'
+                    }}>
+                    {po ? (
                         <span className="font-medium text-sm">{po}</span>
-                    </p>
-                </div>
-            )}
+                    ) : (
+                        <span className="font-medium text-sm">-</span>
+                    )}
+                </p>
+            </div>
         </div>
     );
 };

@@ -24,16 +24,15 @@ const AbsenceJour = () => {
         }
     };
 
-    const handleSearch = (e) => {
-        setSearchTerm(e.target.value.toLowerCase());
-    };
-
-    const filteredAbsents = absents.filter(absent =>
-        absent.matricule?.toLowerCase().includes(searchValue) ||
-        absent.prenoms?.toLowerCase().includes(searchValue) ||
-        absent.poste?.toLowerCase().includes(searchValue) ||
-        absent.secteur?.toLowerCase().includes(searchValue)
-    );
+    const filteredAbsents = absents.filter((absent) => {
+        const search = searchValue.toLowerCase();
+        return (
+            absent.matricule?.toLowerCase().includes(search) ||
+            absent.prenoms?.toLowerCase().includes(search) ||
+            absent.poste?.toLowerCase().includes(search) ||
+            absent.secteur?.toLowerCase().includes(search)
+        );
+    });
 
     const columns = [
         { Header: "Photo", accessor: "photo" },
@@ -61,14 +60,14 @@ const AbsenceJour = () => {
                             name="search"
                             placeholder="Recherchez ici..."
                             value={searchValue}
-                            onChange={handleSearch}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                             className={"fixed top-2 z-10 right-8"}
                         />
                     </div>
                     <_Table
                         entriesPerPage={{ defaultValue: 50, entries: [10, 25, 50, 100] }}
                         title={"Liste des personnels absents"}
-                        canSearch={false} // Désactive la recherche interne
+                        canSearch={false}
                         table={{ columns, rows: dataTable }}
                         pagination={true}
                         loading={loading}
